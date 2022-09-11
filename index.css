@@ -1289,6 +1289,7 @@ a:hover {
       
       
         body {
+                overflow: hidden;
                 height: 100vh;
                 height: var(--app-height);
 
@@ -1330,6 +1331,9 @@ a:hover {
         }
 
         .big-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 margin: 9px;
                 width: 50px; 
                 height: 50px; 
@@ -1341,16 +1345,21 @@ a:hover {
 
         .big-button img {
                 width: 80%;
+                height: 70%;
         }
             
             .small-button{
-                    margin: 9px;
-                    width: 30px; 
-                    height: 30px; 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 9px;
+                width: 50px; 
+                height: 50px; 
             }
 
             .small-button img {
                 width: 100%;
+                height: 80%;
             }
 
             #number-of-super-likes-left{
@@ -1365,7 +1374,7 @@ a:hover {
         }
         
         #share-modal-content-container{
-                height: 60%;
+                height: 65%;
         }
 
 
