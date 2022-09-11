@@ -433,6 +433,13 @@ function unexpand() {
     touchendX = e.changedTouches[0].screenX
     checkDirection()
     })
+    document.getElementById("profile-card").removeEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+        })
+    document.getElementById("profile-card").removeEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+    })
 
 }
 
@@ -594,6 +601,13 @@ function like() {
         touchstartX = e.changedTouches[0].screenX
         })
     document.getElementById("current-dog-photo").addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+    })
+    document.getElementById("profile-card").addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+        })
+    document.getElementById("profile-card").addEventListener('touchend', e => {
     touchendX = e.changedTouches[0].screenX
     checkDirection()
     })
