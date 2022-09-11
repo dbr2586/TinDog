@@ -1,4 +1,4 @@
-import {barcelonaFacebookDogs, barcelonaRescueDogs}  from "data.js"
+import {barcelonaFacebookDogs, barcelonaRescueDogs}  from "./data.js"
 
 class Dog{
     constructor(data) {
