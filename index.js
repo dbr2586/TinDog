@@ -82,7 +82,7 @@ function noMoreDogs(){
 
         let thankYouMessage = "Thank you for using Tindog!"
     
-        const finalMessageHeader = `<img src="images/TindogLogo2.png" id="tindog-logo">`                            
+        const finalMessageHeader = `<img src="images/TinDogLogo2.png" id="tindog-logo">`                            
     
         const rescueFinalMessage1 = `<p class="final-message">${thankYouMessage} To see more dogs in need of adoption or to
                                         find out how you can adopt them, please 
@@ -273,7 +273,7 @@ function generateWelcomeScreen(){
     document.getElementById("profile-container").style.animation = "background-zoom-out 8s ease both"
     document.getElementById("profile-container").classList.add("welcome-screen")
     document.getElementById(`profile-container`).innerHTML = 
-         `<img src="images/TindogLogo2.png" id="tindog-logo" class="fade-in-effect-1">`
+         `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1">`
     disableAllButtons()
 
     let timeOutLength
@@ -418,7 +418,7 @@ function generateHomeScreen(){
     
                     <div id="home-screen-container" class="fade-in-effect">
 
-                    <img src="images/TindogLogo2.png" id="tindog-logo-2">
+                    <img src="images/TinDogLogo2.png" id="tindog-logo-2">
 
                     <p class="home-screen-message">Tindog was created by Daniel Beck Rose as a project
                     for the <a href="https://scrimba.com/learn/frontend">Scrimba Frontend Developer course</a>.</p>   

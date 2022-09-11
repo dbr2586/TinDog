@@ -664,7 +664,7 @@ const barcelonaRescueDogs = [
         hasBeenSuperLiked: false
     },{
         name: "Duna",
-        avatar: "images/duna.jpeg",
+        avatar: "images/Duna.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 7,
@@ -816,7 +816,7 @@ const barcelonaRescueDogs = [
     },
     {
         name: "Miga",
-        avatar: "images/miga.jpeg",
+        avatar: "images/Miga.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 8,
@@ -834,7 +834,7 @@ const barcelonaRescueDogs = [
         hasBeenSuperLiked: false
     }, {
         name: "Agata",
-        avatar: "images/agata.jpeg",
+        avatar: "images/Agata.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 8,
@@ -850,7 +850,7 @@ const barcelonaRescueDogs = [
         hasBeenSuperLiked: false
     },{
         name: "Nerea",
-        avatar: "images/nerea.jpeg",
+        avatar: "images/Nerea.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 4,
@@ -864,7 +864,7 @@ const barcelonaRescueDogs = [
         hasBeenSuperLiked: false
     },{
         name: "Tita",
-        avatar: "images/tita.jpeg",
+        avatar: "images/Tita.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 2,
@@ -878,7 +878,7 @@ const barcelonaRescueDogs = [
         hasBeenSuperLiked: false
     },{
         name: "Nudo",
-        avatar: "images/tita.jpeg",
+        avatar: "images/Nudo.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 5,
@@ -894,7 +894,7 @@ const barcelonaRescueDogs = [
         hasBeenSuperLiked: false
     },{
         name: "Lisa",
-        avatar: "images/lisa.jpeg",
+        avatar: "images/Lisa.jpeg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 9,
