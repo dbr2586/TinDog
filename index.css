@@ -1354,12 +1354,18 @@ a:hover {
             }
 
             #number-of-super-likes-left{
-                color: #18BACD;
-                font-weight: 800;
                 font-size: 15px;
                 left: 38.5px;
                 bottom: 15px;
-                position: absolute;
+        }
+
+        #share-modal-overlay-container{
+                border-radius: 0; 
+              
+        }
+        
+        #share-modal-content-container{
+                height: 60%;
         }
 
 
