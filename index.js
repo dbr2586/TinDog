@@ -22,6 +22,11 @@ let superLikesLeft = 10
 let touchstartX = 0
 let touchendX = 0
     
+window.addEventListener("load",function() {
+    setTimeout(function(){
+        window.scrollTo(0, 1);
+    }, 0);
+})
 
 function checkDirection() {
     touchendX + 100 < touchstartX ? dislike() : ""
