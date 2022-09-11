@@ -1294,7 +1294,7 @@ a:hover {
                 justify-content: space-between;
                 flex-direction: column;
                 width: 100vw;
-                height: 100vh;
+                height: 100%;
                 border-radius: 0;
                 border: none;
                 padding: 0;
@@ -1303,24 +1303,24 @@ a:hover {
 
         #main-container{
                 width: 100vw;
-                height: 90vh;
+                height: 90%;
         }
 
         header {
                 align-self: start;
                 align-items: center;
                 width: 100vw;
-                height: 10vh;
+                height: 10%;
         }
 
         #button-container{
                 width: 100vw;
-                height: 15vh;
+                height: 15%;
         }
 
         #profile-container{
                 width: 100vw;
-                height: 75vh
+                height: 85%
         }
 
         .big-button {
@@ -1355,6 +1355,9 @@ a:hover {
                 bottom: 15px;
                 position: absolute;
         }
+
+
+
     
   
        
