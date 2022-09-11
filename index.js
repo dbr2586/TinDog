@@ -1,5 +1,5 @@
-import Dog from "../Dog.js"
-import {barcelonaFacebookDogs, barcelonaRescueDogs} from "../data.js"
+import Dog from "Dog.js"
+import {barcelonaFacebookDogs, barcelonaRescueDogs} from "data.js"
 
 let firstTimeRendering = true 
 let profileIsExpanded = false
