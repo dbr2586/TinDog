@@ -208,11 +208,11 @@ function render() {
         touchendX > touchstartX ? like() : ""
     }
 
-    document.addEventListener('touchstart', e => {
+    document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
     touchstartX = e.changedTouches[0].screenX
     })
 
-    document.addEventListener('touchend', e => {
+    document.getElementById("current-dog-photo").addEventListener('touchend', e => {
     touchendX = e.changedTouches[0].screenX
     checkDirection()
     })
