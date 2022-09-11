@@ -199,6 +199,23 @@ function render() {
         document.getElementById("undo-button").disabled = true
      } else { document.getElementById("undo-button").disabled = false
     }
+
+    let touchstartX = 0
+    let touchendX = 0
+        
+    function checkDirection() {
+        touchendX < touchstartX ? dislike() : ""
+        touchendX > touchstartX ? like() : ""
+    }
+
+    document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX
+    })
+
+    document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+    })
 }
 
 function undo(){
