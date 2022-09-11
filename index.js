@@ -597,13 +597,6 @@ function like() {
     document.getElementById("profile-card").innerHTML += currentDog.getExpandedProfileHtml()
     document.getElementById("share-link").addEventListener("click", share)
     document.getElementById("current-dog-photo").addEventListener("click", unexpand)
-    document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
-        touchstartX = e.changedTouches[0].screenX
-        })
-    document.getElementById("current-dog-photo").addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-    })
     document.getElementById("profile-card").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
         })
