@@ -24,6 +24,13 @@ const urlParams = new URLSearchParams(shareLinkUrl)
 const dogToSearch = urlParams.get("dog")
 const tempGroupToSearch = urlParams.get('group')
 
+const appHeight = () => {
+    const doc = document.documentElement
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+}
+window.addEventListener('resize', appHeight)
+appHeight()
+
 function getNextDog(){
     if (dogLoaded){
         dogLoaded = false 
@@ -341,7 +348,7 @@ function generateWelcomeScreen2(){
     setTimeout(() => {
         document.getElementById(`profile-container`).innerHTML += 
         ` 
-        <div id="welcome-screen-buttons-container" class="fade-in-effect-3">
+        <div id="welcome-screen-buttons-container" class="fade-in-effect-1">
             <p id="choose-pack-message"><span>Choose a pack:</span></p>
             <div id="welcome-screen-buttons-container-inner">
                 <button id="adoption-button" class="welcome-screen-button"><img id="rescue-dog-icon" src="images/rescue-dog-icon.png"></button> 

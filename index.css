@@ -1298,10 +1298,8 @@ a:hover {
                 border: none;
                 padding: 0;
                 margin: 0;
-                min-height: 100vh;            /* fall-back */
-                min-height: -moz-available;
-                min-height: -webkit-fill-available;
-                min-height: fill-available;
+                height: 100vh;
+                height: var(--app-height);
         }
 
         #main-container{
