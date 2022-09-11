@@ -1314,7 +1314,6 @@ a:hover {
         }
 
         header {
-                align-self: start;
                 align-items: center;
                 width: 100vw;
                 height: 10%;
@@ -1375,6 +1374,11 @@ a:hover {
         
         #share-modal-content-container{
                 height: 65%;
+        }
+
+
+        #please-confirm-message{
+                margin-top: -250px;
         }
 
 

@@ -19,6 +19,13 @@ let clone = []
 let discardPile = [] 
 let undoPile = []
 let superLikesLeft = 10
+let touchstartX = 0
+let touchendX = 0
+    
+function checkDirection() {
+    touchendX < touchstartX ? dislike() : ""
+    touchendX > touchstartX ? like() : ""
+}
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
 const dogToSearch = urlParams.get("dog")
@@ -200,13 +207,7 @@ function render() {
      } else { document.getElementById("undo-button").disabled = false
     }
 
-    let touchstartX = 0
-    let touchendX = 0
-        
-    function checkDirection() {
-        touchendX < touchstartX ? dislike() : ""
-        touchendX > touchstartX ? like() : ""
-    }
+   
 
     document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
     touchstartX = e.changedTouches[0].screenX
@@ -425,6 +426,13 @@ function unexpand() {
     document.getElementById("current-dog-photo").addEventListener("click", expand)
     document.getElementById("text-overlay-container").addEventListener("click", expand)
     profileIsExpanded = false 
+    document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+        })
+    document.getElementById("current-dog-photo").addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+    })
 
 }
 
@@ -582,6 +590,13 @@ function like() {
     document.getElementById("profile-card").innerHTML += currentDog.getExpandedProfileHtml()
     document.getElementById("share-link").addEventListener("click", share)
     document.getElementById("current-dog-photo").addEventListener("click", unexpand)
+    document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX
+        })
+    document.getElementById("current-dog-photo").addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+    })
     profileIsExpanded = true 
  }
 
