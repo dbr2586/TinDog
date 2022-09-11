@@ -217,6 +217,17 @@ const barcelonaFacebookDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     },{
+        name: "Gretel",
+        avatar: "images/Gretel.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 8,
+        bio: `Cushion Queen. 8ish. Love me a bad boy, the bigger the better. Swipe right to climb on my cushion tower.`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+    {
         name: "Happy",
         avatar: "images/Happy.jpeg",
         initialObjectPosition: "center",
