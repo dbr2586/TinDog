@@ -23,8 +23,8 @@ let touchstartX = 0
 let touchendX = 0
     
 function checkDirection() {
-    touchendX < touchstartX ? dislike() : ""
-    touchendX > touchstartX ? like() : ""
+    touchendX + 100 < touchstartX ? dislike() : ""
+    touchendX + 100 > touchstartX ? like() : ""
 }
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
