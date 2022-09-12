@@ -21,12 +21,15 @@ let undoPile = []
 let superLikesLeft = 10
 let touchstartX = 0
 let touchendX = 0
-    
-window.addEventListener("load",function() {
-    setTimeout(function(){
-        window.scrollTo(0, 1);
-    }, 1000);
+
+let typeOfInteraction = "click"
+
+window.addEventListener("touchstart", function() {
+    typeOfInteraction = "touchstart"
 })
+
+    
+
 
 let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg"]
 
@@ -52,6 +55,8 @@ const appHeight = () => {
 window.addEventListener('resize', appHeight)
 appHeight()
 
+
+
 function getNextDog(){
     if (dogLoaded){
         dogLoaded = false 
@@ -71,14 +76,14 @@ function getNextDog(){
 }
 
 // function removeSwipeModeEventListiners(){
-//     document.getElementById("like-button").removeEventListener("click", like)
-//     document.getElementById("dislike-button").removeEventListener("click", dislike)
-//     document.getElementById("super-like-button").removeEventListener("click", superLike)
-//     document.getElementById("undo-button").removeEventListener("click", undo)
-//     document.getElementById("logo-icon").removeEventListener("click", generateHomeScreen)
-//     document.getElementById("profile-icon").removeEventListener("click", function(){
+//     document.getElementById("like-button").removeEventListener(typeOfInteraction, like)
+//     document.getElementById("dislike-button").removeEventListener(typeOfInteraction, dislike)
+//     document.getElementById("super-like-button").removeEventListener(typeOfInteraction, superLike)
+//     document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo)
+//     document.getElementById("logo-icon").removeEventListener(typeOfInteraction, generateHomeScreen)
+//     document.getElementById("profile-icon").removeEventListener(typeOfInteraction, function(){
 //         generateProfileOrChatScreen("profile")})
-//     document.getElementById("chat-icon").removeEventListener("click", function(){
+//     document.getElementById("chat-icon").removeEventListener(typeOfInteraction, function(){
 //         generateProfileOrChatScreen("chat")})
 // }
 
@@ -167,17 +172,17 @@ function noMoreDogs(){
                  } 
              }
         
-        document.getElementById("about-button").addEventListener("click", function(){
+        document.getElementById("about-button").addEventListener(typeOfInteraction, function(){
             userIsReturningToEndScreen = true
             generateHomeScreen()
         })
         document.getElementById("show-adoption-dogs-button") ? 
-            document.getElementById("show-adoption-dogs-button").addEventListener("click", function(){
+            document.getElementById("show-adoption-dogs-button").addEventListener(typeOfInteraction, function(){
                 reinitialize(barcelonaRescueDogs)
              }) : ""
 
         document.getElementById("show-facebook-dogs-button") ? 
-            document.getElementById("show-facebook-dogs-button").addEventListener("click", function(){
+            document.getElementById("show-facebook-dogs-button").addEventListener(typeOfInteraction, function(){
                 reinitialize(barcelonaFacebookDogs)
               }) : ""           
     }, timeOutLength); 
@@ -204,19 +209,19 @@ function render() {
     } else {
         document.getElementById("text-overlay-container").classList.add("text-focus-in")
     }
-    document.getElementById("current-dog-photo").addEventListener("click", expand)
-    document.getElementById("text-overlay-container").addEventListener("click", expand)
-    document.getElementById("like-button").addEventListener("click", like)
-    document.getElementById("super-like-button").addEventListener("click", superLike)
-    document.getElementById("dislike-button").addEventListener("click", dislike)
-    document.getElementById("undo-button").addEventListener("click", undo)
-    document.getElementById("logo-icon").addEventListener("click", generateHomeScreen)
-    document.getElementById("profile-icon").addEventListener("click", function(){
+    document.getElementById("current-dog-photo").addEventListener(typeOfInteraction, expand)
+    document.getElementById("text-overlay-container").addEventListener(typeOfInteraction, expand)
+    document.getElementById("like-button").addEventListener(typeOfInteraction, like)
+    document.getElementById("super-like-button").addEventListener(typeOfInteraction, superLike)
+    document.getElementById("dislike-button").addEventListener(typeOfInteraction, dislike)
+    document.getElementById("undo-button").addEventListener(typeOfInteraction, undo)
+    document.getElementById("logo-icon").addEventListener(typeOfInteraction, generateHomeScreen)
+    document.getElementById("profile-icon").addEventListener(typeOfInteraction, function(){
         generateProfileOrChatScreen("profile")})
-    document.getElementById("chat-icon").addEventListener("click", function(){
+    document.getElementById("chat-icon").addEventListener(typeOfInteraction, function(){
         generateProfileOrChatScreen("chat")})
     if (discardPile.length === 0){
-        document.getElementById("undo-button").removeEventListener("click", undo)
+        document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo)
         document.getElementById("undo-button").disabled = true
      } else { document.getElementById("undo-button").disabled = false
     }
@@ -344,7 +349,7 @@ function generateWelcomeScreen(){
                         <div id="cat-confirmation-checkbox"></div>
                         <div>I am not a cat. </div> 
                     </div>    `
-                document.getElementById("cat-confirmation-checkbox").addEventListener("click", function() {
+                document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
                         document.getElementById("cat-confirmation-container").classList.remove("fade-in-effect-2")
                         document.getElementById("cat-confirmation-checkbox").innerHTML = `<img id="paw-print-checkmark" src="images/paw-print.png">`
                         document.getElementById("cat-confirmation-checkbox").style.background = "lightgreen"
@@ -437,14 +442,14 @@ function createCloneOf(groupToUse){
 function unexpand() {
     document.documentElement.style.setProperty('--initial-image-position', `${currentDog.secondaryObjectPosition}`);
     document.documentElement.style.setProperty('--final-image-position', `${currentDog.initialObjectPosition}`);
-    document.getElementById("current-dog-photo").removeEventListener("click", unexpand)
+    document.getElementById("current-dog-photo").removeEventListener(typeOfInteraction, unexpand)
     // document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
     document.getElementById("current-dog-photo").style.animation = "make-image-bigger .2s ease both, change-image-position .2s ease both" 
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
     document.getElementById("expanded-profile-container").remove()
     document.getElementById("profile-container").style.overflow = "hidden"
-    document.getElementById("current-dog-photo").addEventListener("click", expand)
-    document.getElementById("text-overlay-container").addEventListener("click", expand)
+    document.getElementById("current-dog-photo").addEventListener(typeOfInteraction, expand)
+    document.getElementById("text-overlay-container").addEventListener(typeOfInteraction, expand)
     profileIsExpanded = false 
     document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
@@ -489,7 +494,7 @@ function generateHomeScreen(){
 
                     <button id="home-screen-back-button">Back</button>
                      </div>`
-    document.getElementById("home-screen-back-button").addEventListener("click", function(){
+    document.getElementById("home-screen-back-button").addEventListener(typeOfInteraction, function(){
         goBack("home")})
 
 }
@@ -547,7 +552,7 @@ function generateProfileOrChatScreen(whichOne){
 
     `
 
-    document.getElementById(`${whichOne}-screen-back-button`).addEventListener("click", function(){
+    document.getElementById(`${whichOne}-screen-back-button`).addEventListener(typeOfInteraction, function(){
         goBack(whichOne)})
 
 }
@@ -609,7 +614,7 @@ function like() {
     document.getElementById("info-icon").remove()
     document.getElementById("name-overlay").remove()
     document.getElementById("location-overlay").remove()
-    document.getElementById("current-dog-photo").removeEventListener("click", expand)
+    document.getElementById("current-dog-photo").removeEventListener(typeOfInteraction, expand)
     // document.getElementById("current-dog-photo").style.transition = "object-position 1s"
     // document.getElementById("current-dog-photo").style.objectPosition = currentDog.secondaryObjectPosition
     document.getElementById("current-dog-photo").style.animation = "make-image-smaller 1s ease both, change-image-position 1s ease both"
@@ -618,10 +623,10 @@ function like() {
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.overflowY  = "scroll"
     document.getElementById("profile-card").innerHTML += currentDog.getExpandedProfileHtml()
-    document.getElementById("share-link").addEventListener("click", share)
-    document.getElementById("current-dog-photo").addEventListener("click", unexpand)
-    document.getElementById("profile-text").addEventListener("click", unexpand)
-    document.getElementById("name-overlay-2").addEventListener("click", unexpand)
+    document.getElementById("share-link").addEventListener(typeOfInteraction, share)
+    document.getElementById("current-dog-photo").addEventListener(typeOfInteraction, unexpand)
+    document.getElementById("profile-text").addEventListener(typeOfInteraction, unexpand)
+    document.getElementById("name-overlay-2").addEventListener(typeOfInteraction, unexpand)
     document.getElementById("profile-card").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
         })
@@ -676,11 +681,11 @@ function share(){
                     </div>
                 </div>`
     
-                document.getElementById("copy-link-button").addEventListener("click", function(){
+                document.getElementById("copy-link-button").addEventListener(typeOfInteraction, function(){
                     document.getElementById("copy-link-button-container").innerHTML += `<div id="text-copied-speech-bubble-container"> <img id="text-copied-speech-bubble" src="images/cartoon-bubble-left.png"> <div id="text-copied-speech-bubble-message">Copied!</div></div>`
                     navigator.clipboard.writeText(`${directLink}`)
                 })
-    document.getElementById("go-back-button").addEventListener("click", closeModal)
+    document.getElementById("go-back-button").addEventListener(typeOfInteraction, closeModal)
     document.addEventListener('click',function(e){
         if(e.target && e.target.classList== 'share-button'){
             setTimeout(() => {
