@@ -656,17 +656,6 @@ const barcelonaRescueDogs = [
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
-    },
-    {
-        name: "Señor Don Perro",
-        avatar: "images/DonPerro.jpg",
-        initialObjectPosition: "center",
-        secondaryObjectPosition: "center",
-        age: 12,
-        bio: `Hola, guapas. Soy muy alto, fuerte y guapo. Envíame un mensaje para pasar un buen rato.`,
-        hasBeenSwiped: false,
-        hasBeenLiked: false, 
-        hasBeenSuperLiked: false
     },{
         name: "Tero",
         avatar: "images/Tero.jpeg",
