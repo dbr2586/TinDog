@@ -402,6 +402,10 @@ function generateWelcomeScreen2(){
 }
     
 function initialize(groupToUse){
+    if (window.innerWidth < 500){
+        document.getElementById("header-button-container").style.display = "flex"
+        document.getElementById("button-container").style.display = "flex"
+    }
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.animation = ""
     document.getElementById("profile-container").classList.remove("welcome-screen")
@@ -686,6 +690,12 @@ function closeModal(){
 }
 
 function loadApp(){
+
+    if (window.innerWidth < 500){
+        document.getElementById("header-button-container").style.display = "none"
+        document.getElementById("button-container").style.display = "none"
+    }
+
     if (!tempGroupToSearch || !dogToSearch) { 
         generateWelcomeScreen()
     } else if (tempGroupToSearch.toLowerCase() === "facebook"){

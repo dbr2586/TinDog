@@ -635,7 +635,8 @@ const barcelonaRescueDogs = [
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
-    },{
+    },
+    {
         name: "Dana",
         avatar: "images/Dana.jpeg",
         initialObjectPosition: "center",
@@ -652,6 +653,17 @@ const barcelonaRescueDogs = [
                 Además de esto, Dana es positiva a leishmania, lo que podría complicar todavía más su adopción por el miedo y desconocimiento que todavía hay hacia esta enfermedad común. Dana merece también una oportunidad, ya que la estancia en el refugio le afecta en gran medida.
               <br><br>
               <a href="https://protectorabcn.es/nuestros-animales/dana-6/" target="_blank">Click here for more information.</a>`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+    {
+        name: "Señor Don Perro",
+        avatar: "images/DonPerro.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 12,
+        bio: `Hola, guapas. Soy muy alto, fuerte y guapo. Envíame un mensaje para pasar un buen rato.`,
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
