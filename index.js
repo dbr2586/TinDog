@@ -37,8 +37,8 @@ for (let i = 0; i < images.length; ++i) {
 
 
 function checkDirection() {
-    touchendX + 100 < touchstartX ? dislike() : ""
-    touchendX - 100 > touchstartX ? like() : ""
+    touchendX + 75 < touchstartX ? dislike() : ""
+    touchendX - 75 > touchstartX ? like() : ""
 }
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
@@ -327,7 +327,7 @@ function generateWelcomeScreen(){
             document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
             
             setTimeout(() => {
-                document.getElementById("loading-message").style.color = "rgb(0, 206, 206)"
+                document.getElementById("loading-message").style.color = "rgb(0, 250, 0)"
                 document.getElementById("loading-message").innerHTML = `${dogToLoad.name} loaded!`
                 document.getElementById("loading-message").classList.remove("shake-horizontal")
                 document.getElementById("loading-message").classList.remove("fade-in-effect-2")
@@ -435,9 +435,11 @@ function createCloneOf(groupToUse){
 }
 
 function unexpand() {
+    document.documentElement.style.setProperty('--initial-image-position', `${currentDog.secondaryObjectPosition}`);
+    document.documentElement.style.setProperty('--final-image-position', `${currentDog.initialObjectPosition}`);
     document.getElementById("current-dog-photo").removeEventListener("click", unexpand)
-    document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
-    document.getElementById("current-dog-photo").style.animation = "make-image-bigger .2s ease both" 
+    // document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
+    document.getElementById("current-dog-photo").style.animation = "make-image-bigger .2s ease both, change-image-position .2s ease both" 
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
     document.getElementById("expanded-profile-container").remove()
     document.getElementById("profile-container").style.overflow = "hidden"
@@ -602,19 +604,24 @@ function like() {
 
 
  function expand(){
+    document.documentElement.style.setProperty('--initial-image-position', `${currentDog.initialObjectPosition}`);
+    document.documentElement.style.setProperty('--final-image-position', `${currentDog.secondaryObjectPosition}`);
     document.getElementById("info-icon").remove()
     document.getElementById("name-overlay").remove()
     document.getElementById("location-overlay").remove()
     document.getElementById("current-dog-photo").removeEventListener("click", expand)
-    document.getElementById("current-dog-photo").style.transition = "object-position 1s"
-    document.getElementById("current-dog-photo").style.objectPosition = currentDog.secondaryObjectPosition
-    document.getElementById("current-dog-photo").style.animation = "make-image-smaller 1s ease both"
+    // document.getElementById("current-dog-photo").style.transition = "object-position 1s"
+    // document.getElementById("current-dog-photo").style.objectPosition = currentDog.secondaryObjectPosition
+    document.getElementById("current-dog-photo").style.animation = "make-image-smaller 1s ease both, change-image-position 1s ease both"
+    // document.getElementById("current-dog-photo").style.animation = "change-image-position 1s ease both"
     document.getElementById("text-overlay-container").classList.remove("text-focus-in")
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.overflowY  = "scroll"
     document.getElementById("profile-card").innerHTML += currentDog.getExpandedProfileHtml()
     document.getElementById("share-link").addEventListener("click", share)
     document.getElementById("current-dog-photo").addEventListener("click", unexpand)
+    document.getElementById("profile-text").addEventListener("click", unexpand)
+    document.getElementById("name-overlay-2").addEventListener("click", unexpand)
     document.getElementById("profile-card").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
         })
@@ -690,6 +697,9 @@ function closeModal(){
 }
 
 function loadApp(){
+
+    // document.getElementById("header-button-container").style.opacity = "0.3"
+    // document.getElementById("button-container").style.opacity = "0.3"
 
     if (window.innerWidth < 500){
         document.getElementById("header-button-container").style.display = "none"
