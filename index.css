@@ -1572,6 +1572,7 @@ a:hover {
                 overflow: hidden;
                 height: 100vh;
                 height: var(--app-height);
+                background: linear-gradient(180deg, #FFFFFF 0%, #F6F7FB 100%);
 
         }
         #overall-container{
