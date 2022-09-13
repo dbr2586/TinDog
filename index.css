@@ -21,6 +21,8 @@ body {
 }
 
 #overall-container{ 
+    display: flex;
+    flex-direction: column;
     position: relative; 
     border: 1px solid black; 
     border-radius: 20px; 
@@ -48,6 +50,18 @@ header {
     border: none;
     background: none;
     
+}
+
+.light-blue-background {
+        background: lightblue
+}
+
+#loading-message{
+        color: magenta;
+}
+
+#dot-1, #dot-2, #dot-3 {
+        visibility: "hidden"
 }
 
 /* #undo-button{

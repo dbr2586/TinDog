@@ -814,7 +814,25 @@ let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "ima
 // loadAppAssets()
 
 
-loadImages(images)
+
+let loadingDotsTimer = setInterval(loadingDots, 200)
+let dotCount = 0
+
+
+function loadingDots(){
+    dotCount++
+    dotCount === 1 ? document.getElementById("dot-1").style.visibility = "visible" :
+    dotCount === 2 ? document.getElementById("dot-2").style.visibility = "visible" :
+    dotCount === 3 ? document.getElementById("dot-3").style.visibility = "visible" :
+    dotCount === 4 ? loadingDotsReset() : ""
+}
+function loadingDotsReset(){
+    document.getElementById("dot-2").style.visibility = "hidden" 
+    document.getElementById("dot-3").style.visibility = "hidden" 
+    document.getElementById("dot-1").style.visibility = "hidden" 
+    dotCount = 0
+    
+}
 
 async function loadImages(imageUrlArray) {
     const promiseArray = []; // create an array for promises
@@ -843,6 +861,24 @@ async function loadImages(imageUrlArray) {
     }
 
     await Promise.all(promiseArray); // wait for all the images to be loaded
+    document.body.classList.remove("light-blue-background")
+    document.getElementById("loading-message").remove()
+    clearInterval(loadingDotsTimer)
+    document.getElementById("overall-container").style.display = "flex"
     loadApp()
     return imageArray;
 }
+
+
+function awaitImages(){
+    document.body.classList.add("light-blue-background")
+    document.getElementById("overall-container").style.display = "none"
+    document.body.innerHTML += `<h1 id="loading-message">Loading Tindog<span id="dot-1">.</span><span id="dot-2">.</span><span id="dot-3">.</span></h1>`
+
+}
+
+
+
+awaitImages()
+
+loadImages(images)
