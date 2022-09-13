@@ -230,6 +230,36 @@ button:disabled{
         opacity: .5
 }
 
+.instruction-overlay, .instruction-overlay-2, .instruction-overlay-3 {
+        text-align: center;
+        padding: 20px;
+        width: 100%;
+        background: rgba(1,1,1,.5);
+        color: cyan;
+        top: 20px;
+        position: absolute;
+        font-size: 30px;
+        z-index: 2
+}
+
+.instruction-overlay-2 {
+        top: 250px;
+}
+
+.instruction-overlay-3 {
+        background: rgba(1,1,1,.7);
+        color: magenta;
+}
+
+.instruction-image{
+        width: 40px;
+        height: 40px;
+}
+
+.instruction-image-2{
+        width:80px;
+        height: 30px;
+}
 
 #button-container{
     padding-left: 30px;
@@ -442,7 +472,6 @@ button:disabled{
 
 
 
-
 #location-icon, #location-icon-2{
         position: relative; 
         top: 1.5px;
@@ -492,7 +521,7 @@ button:disabled{
         background-image: linear-gradient(rgb(251, 204, 255), rgb(212, 255, 194));
 }
 
-#home-screen-back-button, #about-button, #profile-screen-back-button, #chat-screen-back-button{
+#home-screen-back-button, #about-button, #profile-screen-back-button, #chat-screen-back-button, #ready-button, #next-button{
         color: black; 
         font-size: 15px;
         border-radius: 5px;
@@ -501,6 +530,19 @@ button:disabled{
         height: 37.5px;
         background: linear-gradient(rgb(188, 255, 188), rgb(101, 255, 101));
         box-shadow: 5px 5px 5px black;
+}
+
+#ready-button {
+        margin-top: 20px;
+        font-weight: 700;
+}
+
+#next-button {
+        margin-bottom: 40px;
+        width: 150px;
+        height: 50px;
+        font-weight: 700;
+        font-size: 20px;
 
 }
 
@@ -554,6 +596,8 @@ button:disabled{
         text-align: center;}
 
 #welcome-screen-buttons-container{
+        position: absolute;
+        bottom: 0;
         z-index: 1;
         padding: 7.5px;
         font-size: 37.5px;

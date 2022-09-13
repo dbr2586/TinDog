@@ -1,3 +1,58 @@
+const sampleDogs = [
+    {
+        name: "Rex",
+        avatar: "images/sampleDog1.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 5,
+        bio: "",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },{
+        name: "Buddy",
+        avatar: "images/sampleDog2.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 1,
+        bio: "",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },{
+        name: "Colby",
+        avatar: "images/sampleDog3.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 3,
+        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+    {
+        name: "Sad Dog",
+        avatar: "images/sadDog.png",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: "8",
+        bio: "",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    }, {
+        name: "Colby",
+        avatar: "images/sampleDog3.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 3,
+        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+]
+
 const barcelonaFacebookDogs = [
     {
         name: "Annie",
@@ -958,4 +1013,4 @@ const barcelonaRescueDogs = [
 
 
 
-export {barcelonaFacebookDogs, barcelonaRescueDogs}
+export {barcelonaFacebookDogs, barcelonaRescueDogs, sampleDogs}
