@@ -19,8 +19,9 @@ class Dog{
         return `
         <div id="profile-card">
             <div id="badge-container">
-                <img id="nope-badge" src="images/badge-nope.png">
-                <img id="like-badge" src="images/badge-like.png">
+                <img id="nope-badge" src="images/badge-nope.png" class="nope-badge-area">
+                <img id="super-like-badge" src="images/super-like-badge.png" class="super-like-badge-area">
+                <img id="like-badge" src="images/badge-like.png" class="like-badge-area">
             </div>
             <img id="current-dog-photo" class="current-dog-photo"  src="${this.avatar}"}>
             <div id="text-overlay-container">

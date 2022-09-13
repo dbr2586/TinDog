@@ -20,7 +20,10 @@ let discardPile = []
 let undoPile = []
 let superLikesLeft = 10
 let touchstartX = 0
+let touchstartY = 0
 let touchendX = 0
+let touchendY = 0 
+
 
 let typeOfInteraction = "click"
 
@@ -30,18 +33,10 @@ window.addEventListener("touchstart", function() {
 
     
 
-
-let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg"]
-
-for (let i = 0; i < images.length; ++i) {
-    let img = new Image();
-    img.src = images[i];
- }
-
-
 function checkDirection() {
-    touchendX + 75 < touchstartX ? dislike() : ""
-    touchendX - 75 > touchstartX ? like() : ""
+    touchendX + 75 < touchstartX ? dislike() 
+    : touchendX - 75 > touchstartX ? like()  
+         : touchendY + 75 < touchstartY && superLikesLeft > 0 ? superLike() : ""
 }
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
@@ -175,16 +170,16 @@ function noMoreDogs(){
         document.getElementById("about-button").addEventListener(typeOfInteraction, function(){
             userIsReturningToEndScreen = true
             generateHomeScreen()
-        })
+        }, {passive: true})
         document.getElementById("show-adoption-dogs-button") ? 
             document.getElementById("show-adoption-dogs-button").addEventListener(typeOfInteraction, function(){
                 reinitialize(barcelonaRescueDogs)
-             }) : ""
+             }, {passive: true}) : ""
 
         document.getElementById("show-facebook-dogs-button") ? 
             document.getElementById("show-facebook-dogs-button").addEventListener(typeOfInteraction, function(){
                 reinitialize(barcelonaFacebookDogs)
-              }) : ""           
+              }, {passive: true}) : ""           
     }, timeOutLength); 
 }
 
@@ -209,44 +204,51 @@ function render() {
     } else {
         document.getElementById("text-overlay-container").classList.add("text-focus-in")
     }
-    document.getElementById("current-dog-photo").addEventListener(typeOfInteraction, expand)
-    document.getElementById("text-overlay-container").addEventListener(typeOfInteraction, expand)
-    document.getElementById("like-button").addEventListener(typeOfInteraction, like)
-    document.getElementById("super-like-button").addEventListener(typeOfInteraction, superLike)
-    document.getElementById("dislike-button").addEventListener(typeOfInteraction, dislike)
-    document.getElementById("undo-button").addEventListener(typeOfInteraction, undo)
-    document.getElementById("logo-icon").addEventListener(typeOfInteraction, generateHomeScreen)
+    document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
+    document.getElementById("like-button").addEventListener(typeOfInteraction, like, {passive: true})
+    document.getElementById("super-like-button").addEventListener(typeOfInteraction, superLike, {passive: true})
+    document.getElementById("dislike-button").addEventListener(typeOfInteraction, dislike, {passive: true})
+    document.getElementById("undo-button").addEventListener(typeOfInteraction, undo, {passive: true})
+    document.getElementById("logo-icon").addEventListener(typeOfInteraction, generateHomeScreen, {passive: true})
     document.getElementById("profile-icon").addEventListener(typeOfInteraction, function(){
-        generateProfileOrChatScreen("profile")})
+        generateProfileOrChatScreen("profile")}, {passive: true})
     document.getElementById("chat-icon").addEventListener(typeOfInteraction, function(){
-        generateProfileOrChatScreen("chat")})
+        generateProfileOrChatScreen("chat")}, {passive: true})
     if (discardPile.length === 0){
-        document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo)
+        document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo, {passive: true})
         document.getElementById("undo-button").disabled = true
      } else { document.getElementById("undo-button").disabled = false
+
+     if (superLikesLeft === 0) {
+        document.getElementById("super-like-button").disabled = true
+        document.getElementById("super-like-button").removeEventListener(typeOfInteraction, superLike, {passive: true})
+    }
     }
 
    
 
     document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
     touchstartX = e.changedTouches[0].screenX
-    })
+    touchstartY = e.changedTouches[0].screenY
+    }, {passive: true})
 
     document.getElementById("current-dog-photo").addEventListener('touchend', e => {
     touchendX = e.changedTouches[0].screenX
+    touchendY = e.changedTouches[0].screenY
     checkDirection()
-    })
+    }, {passive: true})
 }
 
 function undo(){
-    undoIsAlive = true 
-    profileIsExpanded ? unexpand() : ""
-    undoPile.push(currentDog)
-    undoPile.push(discardPile.pop())
-    changeDogs("undo")
-    reverseStatusEffect()
-    cancelPreviousStatusChanges()
-
+    if (discardPile.length > 0) {
+        undoIsAlive = true 
+        profileIsExpanded ? unexpand() : ""
+        undoPile.push(currentDog)
+        undoPile.push(discardPile.pop())
+        changeDogs("undo")
+        reverseStatusEffect()
+        cancelPreviousStatusChanges()
+    }
 }
 
 function cancelPreviousStatusChanges(){
@@ -261,24 +263,10 @@ function reverseStatusEffect(){
     let animationClassNameNumber
 
     if (currentDog.hasBeenSuperLiked){
-        badgeName = "like" 
-        animationClassNameNumber = "-2"
+        badgeName = "super-like" 
+        animationClassNameNumber = "-3"
         superLikesLeft++
         document.getElementById("super-like-button").disabled = false 
-
-        setTimeout(() => {
-            document.getElementById("like-badge").src = "images/super-like-badge.png"
-            document.getElementById("badge-container").style.zIndex = "1"
-            document.getElementById(`${badgeName}-badge`).style.visibility = "visible"
-            document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
-        }, 500)
-
-        setTimeout(() => {
-            document.getElementById(`${badgeName}-badge`).style.visibility = "hidden"
-            document.getElementById("like-badge").src = "images/badge-like.png"
-            document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
-        }, 700)
-
     } else if (currentDog.hasBeenLiked){
         badgeName = "like" 
         animationClassNameNumber = "-2"
@@ -286,18 +274,50 @@ function reverseStatusEffect(){
         badgeName = "nope" 
         animationClassNameNumber = ""
     }
+
+setTimeout(() => {
+    document.getElementById("badge-container").style.zIndex = "1"
+    document.getElementById(`${badgeName}-badge`).style.display = "block"
+    document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
+}, 500)
+
+setTimeout(() => {
+    document.getElementById(`${badgeName}-badge`).style.display = "none"
+    document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
+}, 700)
+
+
+
+//         setTimeout(() => {
+//             document.getElementById("badge-container").style.zIndex = "1"
+//             document.getElementById(`${badgeName}-badge`).style.display = "block"
+//             document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
+//         }, 500)
+
+//         setTimeout(() => {
+//             document.getElementById(`${badgeName}-badge`).style.display = "none"
+//             document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
+//         }, 700)
+
+//     } else if (currentDog.hasBeenLiked){
+//         badgeName = "like" 
+//         animationClassNameNumber = "-2"
+//     } else {
+//         badgeName = "nope" 
+//         animationClassNameNumber = ""
+//     }
     
-  if (currentDog.hasBeenSuperLiked === false){
-    setTimeout(() => {
-        document.getElementById("badge-container").style.zIndex = "1"
-        document.getElementById(`${badgeName}-badge`).style.visibility = "visible"
-        document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
-    }, 500);
-    setTimeout(() => {
-        document.getElementById(`${badgeName}-badge`).style.visibility = "hidden"
-        document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
-    }, 700)
-}
+//   if (currentDog.hasBeenSuperLiked === false){
+//     setTimeout(() => {
+//         document.getElementById("badge-container").style.zIndex = "1"
+//         document.getElementById(`${badgeName}-badge`).style.visibility = "visible"
+//         document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
+//     }, 500);
+//     setTimeout(() => {
+//         document.getElementById(`${badgeName}-badge`).style.visibility = "hidden"
+//         document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
+//     }, 700)
+// }
 }
 
 function disableAllButtons(){
@@ -440,6 +460,7 @@ function createCloneOf(groupToUse){
 }
 
 function unexpand() {
+    resetTouchData()
     document.documentElement.style.setProperty('--initial-image-position', `${currentDog.secondaryObjectPosition}`);
     document.documentElement.style.setProperty('--final-image-position', `${currentDog.initialObjectPosition}`);
     document.getElementById("current-dog-photo").removeEventListener(typeOfInteraction, unexpand)
@@ -448,23 +469,25 @@ function unexpand() {
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
     document.getElementById("expanded-profile-container").remove()
     document.getElementById("profile-container").style.overflow = "hidden"
-    document.getElementById("current-dog-photo").addEventListener(typeOfInteraction, expand)
-    document.getElementById("text-overlay-container").addEventListener(typeOfInteraction, expand)
+    document.getElementById("info-icon").removeEventListener(typeOfInteraction, unexpand, {passive: true})
+    document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true})
     profileIsExpanded = false 
     document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
-        })
+        touchstartY = e.changedTouches[0].screenY
+        }, {passive: true})
     document.getElementById("current-dog-photo").addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-    })
+        touchendX = e.changedTouches[0].screenX
+        touchendY = e.changedTouches[0].screenY
+        checkDirection()
+    }, {passive: true})
     document.getElementById("profile-card").removeEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
-        })
+        }, {passive: true})
     document.getElementById("profile-card").removeEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-    })
+        touchendX = e.changedTouches[0].screenX
+        checkDirection()
+    }, {passive: true})
 
 }
 
@@ -495,7 +518,7 @@ function generateHomeScreen(){
                     <button id="home-screen-back-button">Back</button>
                      </div>`
     document.getElementById("home-screen-back-button").addEventListener(typeOfInteraction, function(){
-        goBack("home")})
+        goBack("home")}, {passive: true})
 
 }
 
@@ -553,43 +576,66 @@ function generateProfileOrChatScreen(whichOne){
     `
 
     document.getElementById(`${whichOne}-screen-back-button`).addEventListener(typeOfInteraction, function(){
-        goBack(whichOne)})
+        goBack(whichOne)}, {passive: true})
 
 }
 
+function generateGeneralDecisionEffects(){
+    currentDog.hasBeenSwiped = true 
+    document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
+    document.getElementById("badge-container").style.zIndex = "1"
+    discardPile.push(currentDog)
+}
+
 function superLike(){
+        profileIsExpanded ? unexpand() : ""
         superLikesLeft--
-        currentDog.hasBeenSwiped = true 
+        generateGeneralDecisionEffects()
+        // currentDog.hasBeenSwiped = true 
         currentDog.hasBeenSuperLiked = true 
-        document.getElementById("like-badge").src = "images/super-like-badge.png"
-        like()
-        superLikesLeft === 0 ? document.getElementById("super-like-button").disabled = true : ""
+        // document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
+        // document.getElementById("badge-container").style.zIndex = "1"
+        document.getElementById("super-like-badge").style.display = "block"
+        document.getElementById("super-like-badge").classList.add("bounce-in-bck-3")
+        // discardPile.push(currentDog)
+        dogsToDisplay.length > 0 ? changeDogs("superLike") : noMoreDogs()
 }
 
 function like() {
     profileIsExpanded ? unexpand() : ""
     currentDog.hasBeenSwiped = true 
-    currentDog.hasBeenSuperLiked ? currentDog.hasBeenLiked = false : currentDog.hasBeenLiked = true
+    currentDog.hasBeenLiked = true
     document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
     document.getElementById("badge-container").style.zIndex = "1"
-    document.getElementById("like-badge").style.visibility = "visible"
+    document.getElementById("like-badge").style.display = "block"
     document.getElementById("like-badge").classList.add("bounce-in-bck-2")
     discardPile.push(currentDog)
     dogsToDisplay.length > 0 ? changeDogs("like") : noMoreDogs()
  }
 
  function changeDogs(typeOfChange){
+
     let direction = "" 
     let kindOfDogToUse = ""
     const lastDog = currentDog
     currentDog  = getNextDog()
-    typeOfChange === "like" ? direction = "right" : typeOfChange === "undo" ? direction = "left-reverse" : direction = "left"
+
+    typeOfChange === "like" ? direction = "right" 
+        : typeOfChange === "superLike" ? direction = "top" 
+        : typeOfChange === "dislike" ? direction = "left"
+        : typeOfChange === "undo" ? 
+            lastDog.hasBeenLiked ? direction = "right-reverse"
+            :lastDog.hasBeenSuperLiked ?  direction = "top-reverse"
+            : direction = "left-reverse" : ""
+
     typeOfChange === "undo" ? kindOfDogToUse = lastDog : kindOfDogToUse = currentDog
+
     setTimeout(() => {
         document.getElementById("profile-card").classList.add(`swing-out-${direction}-fwd`)
         document.getElementById("profile-container").style.backgroundImage = `url(${kindOfDogToUse.avatar}` 
         document.getElementById("profile-container").style.backgroundPosition = kindOfDogToUse.initialObjectPosition 
-    }, 150);
+    }, 150)
+
     setTimeout(() => {
         render() 
     }, 350)
@@ -601,20 +647,28 @@ function like() {
     discardPile.push(currentDog)
     document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
     document.getElementById("badge-container").style.zIndex = "1"
-    document.getElementById("nope-badge").style.visibility = "visible"
+    document.getElementById("nope-badge").style.display = "block"
     document.getElementById("nope-badge").classList.add("bounce-in-bck")
     dogsToDisplay.length > 0 ? changeDogs("dislike") : noMoreDogs()
     
  }
 
+ function resetTouchData(){
+    touchstartX = 0
+    touchstartY = 0
+    touchendX = 0
+    touchendY = 0 
+ }
 
  function expand(){
+    resetTouchData()
     document.documentElement.style.setProperty('--initial-image-position', `${currentDog.initialObjectPosition}`);
     document.documentElement.style.setProperty('--final-image-position', `${currentDog.secondaryObjectPosition}`);
-    document.getElementById("info-icon").remove()
+    document.getElementById("info-icon").src = "images/down-arrow.png"
+    console.log(window.getComputedStyle(document.getElementById("info-icon")).width)
+    document.getElementById("info-icon").style.bottom = `-${parseInt(window.getComputedStyle(document.getElementById("info-icon")).width) * 1.9}px`
     document.getElementById("name-overlay").remove()
     document.getElementById("location-overlay").remove()
-    document.getElementById("current-dog-photo").removeEventListener(typeOfInteraction, expand)
     // document.getElementById("current-dog-photo").style.transition = "object-position 1s"
     // document.getElementById("current-dog-photo").style.objectPosition = currentDog.secondaryObjectPosition
     document.getElementById("current-dog-photo").style.animation = "make-image-smaller 1s ease both, change-image-position 1s ease both"
@@ -623,17 +677,17 @@ function like() {
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.overflowY  = "scroll"
     document.getElementById("profile-card").innerHTML += currentDog.getExpandedProfileHtml()
-    document.getElementById("share-link").addEventListener(typeOfInteraction, share)
-    document.getElementById("current-dog-photo").addEventListener(typeOfInteraction, unexpand)
-    document.getElementById("profile-text").addEventListener(typeOfInteraction, unexpand)
-    document.getElementById("name-overlay-2").addEventListener(typeOfInteraction, unexpand)
+    document.getElementById("share-link").addEventListener(typeOfInteraction, share, {passive: true})
+    document.getElementById("info-icon").removeEventListener(typeOfInteraction, expand, {passive: true}) 
+    document.getElementById("info-icon").addEventListener(typeOfInteraction, unexpand, {passive: true})
     document.getElementById("profile-card").addEventListener('touchstart', e => {
         touchstartX = e.changedTouches[0].screenX
-        })
+        }, {passive: true})
     document.getElementById("profile-card").addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-    })
+        touchendX = e.changedTouches[0].screenX
+        checkDirection()
+        }, {passive: true})
+
     profileIsExpanded = true 
  }
 
@@ -650,7 +704,7 @@ function share(){
     const whatsAppLink = `https://api.whatsapp.com/send?text=${shareLink}`
     const emailLink = `mailto:?subject=Now%20that's%20what%20I%20call%20a%20hot%20dog!&body=Check%20out%20${currentDog.name.replaceAll(' ', '%20')}'s%20profile%20on%20Tindog%20%E2%80%94%20the%20Tinder%20for%20dogs!%20The%20link%20is%20${shareLink}%0D%0A`
     document.getElementById("current-dog-photo").style.transition = ""
-    document.getElementById("current-dog-photo").style.animation = "make-image-smaller .1s ease reverse both"
+    document.getElementById("current-dog-photo").style.animation = ""
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
 
     document.getElementById("overall-container").innerHTML += 
@@ -684,21 +738,21 @@ function share(){
                 document.getElementById("copy-link-button").addEventListener(typeOfInteraction, function(){
                     document.getElementById("copy-link-button-container").innerHTML += `<div id="text-copied-speech-bubble-container"> <img id="text-copied-speech-bubble" src="images/cartoon-bubble-left.png"> <div id="text-copied-speech-bubble-message">Copied!</div></div>`
                     navigator.clipboard.writeText(`${directLink}`)
-                })
-    document.getElementById("go-back-button").addEventListener(typeOfInteraction, closeModal)
+                }, {passive: true})
+    document.getElementById("go-back-button").addEventListener(typeOfInteraction, closeModal, {passive: true})
     document.addEventListener('click',function(e){
         if(e.target && e.target.classList== 'share-button'){
             setTimeout(() => {
                 closeModal()
             }, 1000);
 
-        }})
+        }}, {passive: true})
 }
 
 function closeModal(){
     document.getElementById("share-modal-overlay-container").remove()
     render()
-    expand()
+    document.getElementById("text-overlay-container").classList.remove("text-focus-in")
 }
 
 function loadApp(){
@@ -745,6 +799,18 @@ function searchForDog() {
 
 }
 
-loadApp()
+
+let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada-2.jpeg"]
+
+function loadAppAssets () {
+
+    for (let i = 0; i < images.length; ++i) {
+        let img = new Image();
+        img.src = images[i];
+        i = images.length - 1 ? loadApp() : ""
+    }
+}
+
+loadAppAssets()
 
 

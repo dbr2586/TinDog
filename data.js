@@ -937,6 +937,21 @@ const barcelonaRescueDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     },
+    {
+        name: "Prada",
+        avatar: "images/Prada.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 2,
+        bio: `Un hogar para ella<br><br>
+
+        Imposible no enamorarse de los ojitos de Prada.
+        Prada llegó al refugio porque la persona que la tenía no disponía de tiempo para cuidarla y desde entonces está con nosotros buscando hogar. Es una perrita activa y con ganas de aprender. Por ser PPP a Prada le podría costar más encontrar familia aunque sea una perrita buena, alegre y sociable. Quizá tú puedes dar ese giro en la vida de Prada que le proporcione el cambio que tanto necesita.
+        <br><br><a href="https://protectorabcn.es/nuestros-animales/prada-2/" target="_blank">Click here for more information.</a>`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
 
 ]
 
