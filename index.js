@@ -329,11 +329,12 @@ function generateWelcomeScreen(){
 
     dogLoaded ? variableHtml = `<p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` : ""
 
+    document.getElementById(`profile-container`).innerHTML = 
+         `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1"> ${variableHtml}`   
     document.getElementById("profile-container").style.backgroundImage = 'url("images/Barcelona4.jpg")'
     document.getElementById("profile-container").style.animation = "background-zoom-out 3s ease-in-out both"
     document.getElementById("profile-container").classList.add("welcome-screen")
-    document.getElementById(`profile-container`).innerHTML = 
-         `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1"> ${variableHtml}`   
+    
 
    
 
