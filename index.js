@@ -334,7 +334,7 @@ function generateWelcomeScreen(){
     document.getElementById(`profile-container`).innerHTML = 
          `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1"> ${variableHtml}`   
     document.getElementById("profile-container").style.backgroundImage = 'url("images/Barcelona4.jpg")'
-    document.getElementById("profile-container").style.animation = "background-zoom-out 3s ease-in-out forwards"
+    document.getElementById("profile-container").style.animation = "background-zoom-out 3s ease-in-out both"
     document.getElementById("profile-container").classList.add("welcome-screen")
     
 
