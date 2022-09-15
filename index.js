@@ -910,11 +910,11 @@ function like() {
         document.getElementById("profile-card").classList.add(`swing-out-${direction}-fwd`)
         document.getElementById("profile-container").style.backgroundImage = `url(${kindOfDogToUse.avatar}` 
         document.getElementById("profile-container").style.backgroundPosition = kindOfDogToUse.initialObjectPosition 
-    }, 150)
+    }, 50)
 
     setTimeout(() => {
         render() 
-    }, 350)
+    }, 550)
  }
 
  function dislike() {
