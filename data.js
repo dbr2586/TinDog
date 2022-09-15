@@ -1,6 +1,6 @@
 const sampleDogs = [
     {
-        name: "Rex",
+        name: "Fake Dog",
         avatar: "images/sampleDog1.jpg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
@@ -10,7 +10,7 @@ const sampleDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     },{
-        name: "Buddy",
+        name: "Another Fake Dog",
         avatar: "images/sampleDog2.jpg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
@@ -20,7 +20,7 @@ const sampleDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     },{
-        name: "Colby",
+        name: "Yet Another Fake Dog",
         avatar: "images/sampleDog3.jpg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
@@ -31,7 +31,7 @@ const sampleDogs = [
         hasBeenSuperLiked: false
     },
     {
-        name: "Sad Dog",
+        name: "A Sad Fake Dog",
         avatar: "images/sadDog.png",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
@@ -41,7 +41,7 @@ const sampleDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     }, {
-        name: "Colby",
+        name: "Yet Another Fake Dog",
         avatar: "images/sampleDog3.jpg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
@@ -241,7 +241,7 @@ const barcelonaFacebookDogs = [
         name: "Frida",
         avatar: "images/Frida.jpeg",
         initialObjectPosition: "center",
-        secondaryObjectPosition: "center",
+        secondaryObjectPosition: "50% 30%",
         age: 4,
         bio: `I love slow walks, good food and long afternoons at the couch, just chilling and enjoying each other’s company. 🥰`,
         hasBeenSwiped: false,
@@ -262,8 +262,8 @@ const barcelonaFacebookDogs = [
     },{
         name: "George",
         avatar: "images/George.jpeg",
-        initialObjectPosition: "center",
-        secondaryObjectPosition: "top",
+        initialObjectPosition: "50% 30%",
+        secondaryObjectPosition: "50% 10%",
         age: 6,
         bio: `Likes snoozes in the sun, rolling around in the sand and dinnertime. Dislikes being woken up and short walks.
         Looking for that special someone to stare at longingly but never share a meal with.
@@ -508,6 +508,16 @@ const barcelonaFacebookDogs = [
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
+    }, {
+        name: "Rosie",
+        avatar: "images/Rosie.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 4,
+        bio: 'Kill station survivor. Outgoing but scrappy little girl who loves big boys. If you don’t know where your place is in this world, she’ll put you in it.',
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
     },{
         name: "Salsifi",
         avatar: "images/Salsifi.jpeg",
@@ -570,7 +580,7 @@ const barcelonaFacebookDogs = [
     },{
         name: "Slinky",
         avatar: "images/Slinky.jpeg",
-        initialObjectPosition: "center",
+        initialObjectPosition: "65% 50%",
         secondaryObjectPosition: "center",
         age: 12,
         bio: `Living in BCN 4 years, but originally from Newcastle via Isle of Man, Manila, Amsterdam. I'm an ex-pet. <br> <br>

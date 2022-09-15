@@ -5,7 +5,7 @@
 
 *{
     box-sizing: border-box;
-    font-family: 'Poppins';
+    font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
 }
 
@@ -58,6 +58,11 @@ header {
 
 #loading-message{
         color: magenta;
+}
+
+#loading-message-2{
+        color: rgb(0, 250, 0);
+        display: none 
 }
 
 #dot-1, #dot-2, #dot-3 {
@@ -252,8 +257,8 @@ button:disabled{
 }
 
 .instruction-image{
-        width: 40px;
-        height: 40px;
+        width: 25px;
+        height: 25px;
 }
 
 .instruction-image-2{
@@ -278,8 +283,8 @@ button:disabled{
     justify-content: center;
     align-items: center;
     margin: 9px;
-    width: 69px; 
-    height: 69px; 
+    width: 60px; 
+    height: 60px; 
     border-radius: 50px;
     border: none;
     background: none;
@@ -303,7 +308,7 @@ button:disabled{
 #like-button {
         background-image: url("images/icon-heart.png");
         background-size: 55%;
-        background-position: center;
+        background-position: 50% 60%;
         background-repeat: no-repeat
 }
 
@@ -347,6 +352,9 @@ button:disabled{
 
 
 #profile-card{
+        position: relative;
+        width: 100%; 
+        height: 100%;
     transform-origin: 50% 99%; 
 }
 
@@ -425,7 +433,6 @@ button:disabled{
 }
 
 #name-overlay {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
@@ -577,7 +584,8 @@ button:disabled{
 
 
 #show-adoption-dogs-button, #show-facebook-dogs-button{
-         
+        
+        font-size: 20px;
         border-radius: 2px;
         margin: 2px;
         background: lightgreen;
@@ -764,6 +772,7 @@ button:disabled{
 }
 
 #go-back-button{
+        font-weight: 600;
         font-size: 15px;
         margin-top: 0;
         border: none;
@@ -853,7 +862,6 @@ button:disabled{
         margin-top: 45px;
 }
 #location-overlay, .expanded-profile-container {
-    font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -1607,19 +1615,7 @@ a:hover {
         }
       }
       
-/* 
-@media only screen and (max-width: 1000px) {
 
-        .profile-message {
-                font-size: 20px;
-        }
-
-        .home-screen-message{
-                font-size: 17px;
-        }
-
-
-} */
 
 
 
@@ -1726,16 +1722,16 @@ a:hover {
         }
 
         .home-screen-message{
-                font-size: 16px;
+                font-size: 15px;
                 margin: 10px
         }
 
         .final-message {
-                font-size: 16px;
+                font-size: 15px;
         }
 
         #please-confirm-message{
-                margin-top: -55px
+                margin-top: -45px
         }
 
         #choose-pack-message{
@@ -1765,7 +1761,7 @@ a:hover {
         }
 
         #tindog-logo{
-                width: 200px;
+                width: 300px;
                
         }
 
@@ -1793,7 +1789,27 @@ a:hover {
                 font-size: 20px;
         }
 
+        #info-icon{
+                right: 40px;
+        }
+
 }
+
+@media only screen and (max-width: 450px) and (min-height: 900px) {
+
+        #info-icon{
+                right: 20px;
+        }
+}
+
+@media only screen and (max-width: 420px) and (min-height: 890px) {
+        #info-icon{
+                right: 20px;
+        }
+
+}
+
+
 
 
 @media only screen and (max-width: 440px) and (min-height: 700px) and (max-height: 750px) {
@@ -1820,7 +1836,7 @@ a:hover {
 @media only screen and (max-width: 420px) and (max-height: 700px) {
 
         #please-confirm-message{
-                margin-top: -105px
+                margin-top: -75px
         }
 }
 
@@ -1833,17 +1849,10 @@ a:hover {
                 height: 75px
         }
 
-        .profile-message {
-                font-size: 12px;
+        .profile-message, .home-screen-message, .final-message {
+                font-size: 14px;
         }
         
-        .home-screen-message{
-                font-size: 12px;
-        }
-
-        .final-message {
-                font-size: 12px;
-        }
 
         #please-confirm-message{
                 font-size: 15px;
@@ -1913,3 +1922,35 @@ a:hover {
                 justify-content: space-around
         }
 }
+
+@media only screen 
+    and (max-width: 300px) 
+    and (min-height: 650px) {
+
+        .big-button {
+                width: 40px;
+                height: 40px;
+        }
+
+   
+   
+        #info-icon {
+                right: 140px;
+        }
+
+        #name-overlay-2{
+                font-size: 15px;
+        }
+
+        #location-overlay-2{
+                font-size: 15px;
+        }
+
+        #profile-text{
+                font-size: 15px;
+        }
+
+        #share-link{
+                font-size: 15px;
+        }
+    }

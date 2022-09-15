@@ -7,7 +7,8 @@ let dogLoaded = false
 let hasSeenFacebookDogs = false 
 let hasSeenRescueDogs = false 
 let userIsReturningToEndScreen = false
-let needsTutorial = true 
+let undoIsAlive = false 
+let needsTutorial = true  
 let groupBeingUsed = ""
 let nextDogToDisplay
 let currentDog 
@@ -36,7 +37,7 @@ window.addEventListener("touchstart", function() {
 function checkDirection() {
     touchendX + 75 < touchstartX ? dislike() 
     : touchendX - 75 > touchstartX ? like()  
-         : touchendY + 75 < touchstartY && superLikesLeft > 0 ? superLike() : ""
+         : touchendY + 75 < touchstartY ? superLike() : ""
 }
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
@@ -73,24 +74,14 @@ function getNextDog(){
     }
 }
 
-// function removeSwipeModeEventListiners(){
-//     document.getElementById("like-button").removeEventListener(typeOfInteraction, like)
-//     document.getElementById("dislike-button").removeEventListener(typeOfInteraction, dislike)
-//     document.getElementById("super-like-button").removeEventListener(typeOfInteraction, superLike)
-//     document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo)
-//     document.getElementById("logo-icon").removeEventListener(typeOfInteraction, generateHomeScreen)
-//     document.getElementById("profile-icon").removeEventListener(typeOfInteraction, function(){
-//         generateProfileOrChatScreen("profile")})
-//     document.getElementById("chat-icon").removeEventListener(typeOfInteraction, function(){
-//         generateProfileOrChatScreen("chat")})
-// }
-
 function noMoreDogs(){
 
     // removeSwipeModeEventListiners()
     groupBeingUsed === barcelonaFacebookDogs ? hasSeenFacebookDogs = true : hasSeenRescueDogs = true 
 
     let timeOutLength
+
+    disableAllButtons()
 
     document.getElementById("number-of-super-likes-left").textContent = ""
 
@@ -101,7 +92,6 @@ function noMoreDogs(){
 
 
     setTimeout(() => {
-        disableAllButtons()
         // disableAllButtons()
         let imageNumberToUse 
         hasSeenFacebookDogs && hasSeenRescueDogs ? imageNumberToUse = 3 : imageNumberToUse = 2 
@@ -151,7 +141,7 @@ function noMoreDogs(){
 
         if (groupBeingUsed === barcelonaRescueDogs){
 
-            if (hasSeenFacebookDogs === false) {
+            if (!hasSeenFacebookDogs) {
 
                 document.getElementById(`profile-container`).innerHTML = 
                 finalMessageHeader + rescueFinalMessage1 + rescueFinalMessage2A + aboutButton
@@ -161,7 +151,7 @@ function noMoreDogs(){
                         finalMessageHeader + rescueFinalMessage1 + rescueFinalMessage2B + aboutButton
                     }
         } else {
-                if (hasSeenRescueDogs === false){
+                if (!hasSeenRescueDogs){
                  document.getElementById(`profile-container`).innerHTML = 
                  finalMessageHeader + facebookFinalMessage3A + aboutButton
                 } else {
@@ -186,16 +176,31 @@ function noMoreDogs(){
     }, timeOutLength); 
 }
 
-function render() {
-    document.getElementById("number-of-super-likes-left").innerHTML = `x${superLikesLeft}`
-    superLikesLeft === 0 ? document.getElementById("number-of-super-likes-left").classList.add("no-super-likes-left"):""
-    superLikesLeft > 0 && document.getElementById("number-of-super-likes-left").classList.contains("no-super-likes-left") ? document.getElementById("number-of-super-likes-left").classList.remove("no-super-likes-left"):""
 
-    document.getElementById("profile-container").style.overflow = "hidden"
-    document.getElementById(`profile-container`).innerHTML = currentDog.getProfileHtml()
-    document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
+function addAllButtonEventListeners(){
+
+    if (discardPile.length > 0) {
+        document.getElementById("undo-button").addEventListener(typeOfInteraction, undo, {passive: true})} 
+    document.getElementById("like-button").addEventListener(typeOfInteraction, like, {passive: true})
+    document.getElementById("super-like-button").addEventListener(typeOfInteraction, superLike, {passive: true})
+    document.getElementById("dislike-button").addEventListener(typeOfInteraction, dislike, {passive: true})
+    document.getElementById("logo-icon").addEventListener(typeOfInteraction, generateHomeScreen, {passive: true})
+    document.getElementById("profile-icon").addEventListener(typeOfInteraction, function(){
+        generateProfileOrChatScreen("profile")}, {passive: true})
+    document.getElementById("chat-icon").addEventListener(typeOfInteraction, function(){
+        generateProfileOrChatScreen("chat")}, {passive: true})
+}
+
+function updateButtons(){
+
+    document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
+
+    if (firstTimeRendering && !needsTutorial){
+        addAllButtonEventListeners()
+    }
 
     if (firstTimeRendering) {
+        updateSuperLikes()
         document.getElementById("profile-container").classList.add("text-focus-in") 
         document.getElementById("dislike-button").disabled = false 
         document.getElementById("like-button").disabled = false 
@@ -205,43 +210,52 @@ function render() {
         document.getElementById("chat-icon").disabled = false 
         firstTimeRendering = false 
     } else {
-        document.getElementById("text-overlay-container").classList.add("text-focus-in")
+        // document.getElementById("text-overlay-container").classList.add("text-focus-in")
     }
 
-    if (needsTutorial === false){
-        document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
-        document.getElementById("like-button").addEventListener(typeOfInteraction, like, {passive: true})
-        document.getElementById("super-like-button").addEventListener(typeOfInteraction, superLike, {passive: true})
-        document.getElementById("dislike-button").addEventListener(typeOfInteraction, dislike, {passive: true})
-        document.getElementById("undo-button").addEventListener(typeOfInteraction, undo, {passive: true})
-        document.getElementById("logo-icon").addEventListener(typeOfInteraction, generateHomeScreen, {passive: true})
-        document.getElementById("profile-icon").addEventListener(typeOfInteraction, function(){
-            generateProfileOrChatScreen("profile")}, {passive: true})
-        document.getElementById("chat-icon").addEventListener(typeOfInteraction, function(){
-            generateProfileOrChatScreen("chat")}, {passive: true})
-        if (discardPile.length === 0){
-            document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo, {passive: true})
-            document.getElementById("undo-button").disabled = true
-        } else { document.getElementById("undo-button").disabled = false
 
-        if (superLikesLeft === 0) {
-            document.getElementById("super-like-button").disabled = true
-            document.getElementById("super-like-button").removeEventListener(typeOfInteraction, superLike, {passive: true})
-        }
-        }
+    if (!needsTutorial) {
 
         document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
-        touchstartX = e.changedTouches[0].screenX
-        touchstartY = e.changedTouches[0].screenY
-        }, {passive: true})
+            touchstartX = e.changedTouches[0].screenX
+            touchstartY = e.changedTouches[0].screenY
+            }, {passive: true})
 
-        document.getElementById("current-dog-photo").addEventListener('touchend', e => {
-        touchendX = e.changedTouches[0].screenX
-        touchendY = e.changedTouches[0].screenY
-        checkDirection()
-        }, {passive: true})
+            document.getElementById("current-dog-photo").addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX
+            touchendY = e.changedTouches[0].screenY
+            checkDirection()
+            }, {passive: true})
     }
+
+    if (discardPile.length > 0 && !undoIsAlive && !needsTutorial) {
+        document.getElementById("undo-button").disabled = false
+        document.getElementById("undo-button").addEventListener(typeOfInteraction, undo, {passive: true}) 
+        undoIsAlive = true 
+     } 
+     
+     if (discardPile.length === 0 && undoIsAlive && !needsTutorial) {
+        document.getElementById("undo-button").removeEventListener(typeOfInteraction, undo, {passive: true})
+        document.getElementById("undo-button").disabled = true
+        undoIsAlive = false 
+     }
 }
+
+
+
+
+function render() {
+   
+    document.getElementById("profile-container").style.overflow = "hidden"
+    document.getElementById(`profile-container`).innerHTML = currentDog.getProfileHtml()
+    document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
+
+    updateButtons()
+
+  
+}
+       
+
 
 function undo(){
     if (discardPile.length > 0) {
@@ -290,37 +304,6 @@ setTimeout(() => {
 }, 700)
 
 
-
-//         setTimeout(() => {
-//             document.getElementById("badge-container").style.zIndex = "1"
-//             document.getElementById(`${badgeName}-badge`).style.display = "block"
-//             document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
-//         }, 500)
-
-//         setTimeout(() => {
-//             document.getElementById(`${badgeName}-badge`).style.display = "none"
-//             document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
-//         }, 700)
-
-//     } else if (currentDog.hasBeenLiked){
-//         badgeName = "like" 
-//         animationClassNameNumber = "-2"
-//     } else {
-//         badgeName = "nope" 
-//         animationClassNameNumber = ""
-//     }
-    
-//   if (currentDog.hasBeenSuperLiked === false){
-//     setTimeout(() => {
-//         document.getElementById("badge-container").style.zIndex = "1"
-//         document.getElementById(`${badgeName}-badge`).style.visibility = "visible"
-//         document.getElementById(`${badgeName}-badge`).classList.add(`bounce-in-bck-reverse${animationClassNameNumber}`)
-//     }, 500);
-//     setTimeout(() => {
-//         document.getElementById(`${badgeName}-badge`).style.visibility = "hidden"
-//         document.getElementById(`${badgeName}-badge`).classList.remove(`bounce-in-bck-reverse${animationClassNameNumber}`)
-//     }, 700)
-// }
 }
 
 function disableAllButtons(){
@@ -352,13 +335,12 @@ function generateWelcomeScreen(){
 
         if (dogLoaded) {
 
-            document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
+            document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>
+                                                                         <p class="welcome-message-loading" id="loading-message-2">${dogToLoad.name} loaded! </p>` 
             
             setTimeout(() => {
-                document.getElementById("loading-message").style.color = "rgb(0, 250, 0)"
-                document.getElementById("loading-message").innerHTML = `${dogToLoad.name} loaded!`
-                document.getElementById("loading-message").classList.remove("shake-horizontal")
-                document.getElementById("loading-message").classList.remove("fade-in-effect-2")
+                document.getElementById("loading-message").style.display = "none"
+                document.getElementById("loading-message-2").style.display = "block"
             }, 2000)
 
             setTimeout(() => {initialize(groupToSearch)}, 3000)
@@ -421,7 +403,7 @@ function initialize(groupToUse){
     }
     
   
-    if (needsTutorial){
+    if (needsTutorial && !dogLoaded){
         generateTutorial()
     } else {
         document.getElementById("profile-container").style.backgroundImage = "none"
@@ -436,6 +418,8 @@ function initialize(groupToUse){
 }
 
 function generateTutorial(){
+    let tutorialSwipeIsAlive = true 
+    let tutorialStep = 1 
     superLikesLeft++
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.animation = ""
@@ -444,46 +428,77 @@ function generateTutorial(){
     currentDog = getNextDog()
     render()
     disableAllButtons()
+    document.getElementById("number-of-super-likes-left").classList.add("no-super-likes-left")
     document.getElementById("info-icon").style.opacity = "0.5"
     document.getElementById("info-icon").style.cursor = "not-allowed"
     document.getElementById("like-button").disabled = false
-    document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">Swipe right or press the <img src="images/icon-heart.png" class="instruction-image"> button to like a dog! Try it now!</p>`
+    document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">Swipe right ⮕  or press the <img src="images/icon-heart.png" class="instruction-image"> button to like a dog! Try it now!</p>`
     document.getElementById("like-button").addEventListener(typeOfInteraction, tutorialStepTwo, {passive: true} )
+    addSwipeEventListeners()
+
+    function addSwipeEventListeners(){
+        document.getElementById("profile-card").addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX
+            touchstartY = e.changedTouches[0].screenY
+            }, {passive: true})
+    
+        document.getElementById("profile-card").addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX
+            touchendY = e.changedTouches[0].screenY
+            checkDirectionTutorialVersion()
+            }, {passive: true})    
+    }
+
+    
+    
+    function checkDirectionTutorialVersion(){
+        touchendX - 75 > touchstartX && tutorialStep === 1 && tutorialSwipeIsAlive ? tutorialStepTwo()
+            : touchendY + 75 < touchstartY && tutorialStep === 2 && tutorialSwipeIsAlive ? tutorialStepThree() 
+                : touchendX + 75 < touchstartX  && tutorialStep === 3 && tutorialSwipeIsAlive ? tutorialStepFour() : ""
+    }
+
 
     function tutorialStepTwo(){
-        console.log(discardPile)
-        console.log(undoPile)
+        tutorialSwipeIsAlive = false
+        tutorialStep = 2
         document.getElementById("instruction").remove()
         like()
         document.getElementById("info-icon").style.opacity = "0.5"
         document.getElementById("like-button").disabled = true
         document.getElementById("like-button").removeEventListener(typeOfInteraction, tutorialStepTwo, {passive: true} )
         setTimeout(() => {
-            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-2">Swipe up or press the <img src="images/super-like-button.png" class="instruction-image"> button to superlike a dog! Try it now!</p>`
+            tutorialSwipeIsAlive = true
+            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-2">Swipe up ⬆ or press the <img src="images/super-like-button.png" class="instruction-image"> button to superlike a dog! Try it now!</p>`
             document.getElementById("super-like-button").disabled = false
+            document.getElementById("number-of-super-likes-left").classList.remove("no-super-likes-left")
+            addSwipeEventListeners()
             document.getElementById("super-like-button").addEventListener(typeOfInteraction, tutorialStepThree, {passive: true} )
         }, 1500);
     }
 
     function tutorialStepThree(){
-        console.log(discardPile)
-        console.log(undoPile)
+        tutorialSwipeIsAlive = false
+        tutorialStep = 3
         document.getElementById("instruction").remove()
         superLike()
+        document.getElementById("number-of-super-likes-left").classList.add("no-super-likes-left")
         document.getElementById("info-icon").style.opacity = "0.5"
         document.getElementById("super-like-button").disabled = true
         document.getElementById("super-like-button").removeEventListener(typeOfInteraction, tutorialStepThree, {passive: true} )
         setTimeout(() => {
+            tutorialSwipeIsAlive = true
             document.getElementById("dislike-button").disabled = false
-            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">Swipe left or press the <img src="images/icon-cross.png" class="instruction-image"> button to reject a dog! Try it now!</p>`
+            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">Swipe left ⬅ or press the <img src="images/icon-cross.png" class="instruction-image"> button to reject a dog! Try it now!</p>`
+            addSwipeEventListeners()
             document.getElementById("dislike-button").addEventListener(typeOfInteraction, tutorialStepFour, {passive: true} )
         }, 1500);
     }
     function tutorialStepFour(){
-        console.log(discardPile)
-        console.log(undoPile)
+        tutorialStep = 4
+        tutorialSwipeIsAlive = false
         document.getElementById("instruction").remove()
         dislike()
+        document.getElementById("number-of-super-likes-left").classList.add("no-super-likes-left")
         document.getElementById("dislike-button").disabled = true
         document.getElementById("dislike-button").removeEventListener(typeOfInteraction, tutorialStepFour, {passive: true} )
         setTimeout(() => {
@@ -496,10 +511,9 @@ function generateTutorial(){
     }
 
     function tutorialStepFive(){
-        console.log(discardPile)
-        console.log(undoPile)
         document.getElementById("instruction").remove()
         undo()
+        document.getElementById("number-of-super-likes-left").classList.add("no-super-likes-left")
         document.getElementById("undo-button").disabled = true
         document.getElementById("undo-button").removeEventListener(typeOfInteraction, tutorialStepFive, {passive: true} )
         setTimeout(() => {
@@ -510,9 +524,6 @@ function generateTutorial(){
     }
 
     function tutorialStepSix(){
-        console.log(discardPile)
-        console.log(undoPile)
-        console.log(currentDog)
         document.getElementById("info-icon").removeEventListener(typeOfInteraction, tutorialStepSix, {passive: true} )
         document.getElementById("instruction").remove()
         expand()
@@ -529,7 +540,7 @@ function generateTutorial(){
         unexpand()
         document.getElementById("info-icon").style.opacity = "0.5"
         setTimeout(() => {
-            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-3">All the other buttons and links do things too! Try them out later! Ready to start looking at some real dogs of Barcelona? <button id="ready-button">Ready!</button></p>`
+            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-3">All the other buttons and links do things too! Try them out later! Ready to start looking at some real dogs of Barcelona?<br> <button id="ready-button">Ready!</button></p>`
             document.getElementById("ready-button").addEventListener(typeOfInteraction, tutorialStepEight, {passive: true} )
         }, 1500);
     }
@@ -546,24 +557,27 @@ function generateTutorial(){
 `    
 
 
-document.addEventListener('click',function(e){
-if(e.target && e.target.id== 'facebook-dog-icon'){
-    prepareForNormalInitialization()
-    initialize(barcelonaFacebookDogs)
-    }})
+        document.addEventListener(typeOfInteraction,function(e){
+        if(e.target && e.target.id== 'facebook-dog-icon'){
+            prepareForNormalInitialization()
+            initialize(barcelonaFacebookDogs)
+            }}, {passive: true} )
 
-document.addEventListener('click',function(e){
-if(e.target && e.target.id== 'rescue-dog-icon'){
-    prepareForNormalInitialization()
-initialize(barcelonaRescueDogs)
-}})    
-    document.getElementById("profile-container").style.backgroundImage = "url('images/Barcelona1.jpg')"
+        document.addEventListener(typeOfInteraction,function(e){
+        if(e.target && e.target.id== 'rescue-dog-icon'){
+            prepareForNormalInitialization()
+        initialize(barcelonaRescueDogs)
+        }}, {passive: true} )    
+
+            document.getElementById("profile-container").style.backgroundImage = "url('images/Barcelona1.jpg')"
    }
 
 
 }
 
 function prepareForNormalInitialization(){
+    document.getElementById("profile-container").classList.remove("text-focus-in") 
+    document.getElementById("profile-container").style.animation = "none"
     discardPile = [] 
     undoPile = []
     needsTutorial = false
@@ -590,18 +604,22 @@ function createCloneOf(groupToUse){
    return clone = [...groupToUse]
 }
 
-function unexpand() {
+function unexpand(type) {
     resetTouchData()
+    let animationDuration = ".5s"
+    if (type === "quick"){
+        animationDuration = ".2s"
+    }
     profileIsExpanded = false 
     document.documentElement.style.setProperty('--initial-image-position', `${currentDog.secondaryObjectPosition}`);
     document.documentElement.style.setProperty('--final-image-position', `${currentDog.initialObjectPosition}`);
     document.getElementById("current-dog-photo").removeEventListener(typeOfInteraction, unexpand)
     // document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
-    document.getElementById("current-dog-photo").style.animation = "make-image-bigger .2s ease both, change-image-position .2s ease both" 
+    document.getElementById("current-dog-photo").style.animation = `make-image-bigger ${animationDuration} ease both, change-image-position ${animationDuration} ease both`
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
     document.getElementById("expanded-profile-container").remove()
     document.getElementById("profile-container").style.overflow = "hidden"
-    if (needsTutorial === false) {
+    if (!needsTutorial) {
         document.getElementById("info-icon").removeEventListener(typeOfInteraction, unexpand, {passive: true})
         document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true})
         document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
@@ -631,6 +649,7 @@ function removeOtherScreen() {
 }
 
 function generateHomeScreen(){
+    console.log("hello")
     removeOtherScreen()
     profileIsExpanded ? unexpand() : ""
     disableBottomButtons()
@@ -643,9 +662,9 @@ function generateHomeScreen(){
                     <p class="home-screen-message">Tindog was created by Daniel Beck Rose as a project
                     for the <a href="https://scrimba.com/learn/frontend">Scrimba Frontend Developer course</a>.</p>   
 
-                    <p class="home-screen-message">His dog is Toby, a cocker spaniel, who has <a href="#" target="_blank">a profile</a> on Tindog, of course. The other Facebook dogs are from the <a href="https://www.facebook.com/groups/DogsBarcelona" target="_blank">Barcelona Dogs Facebook group</a>. The background images of Barcelona are from <a href="https://unsplash.com/s/photos/barcelona" target="_blank">Unsplash</a>.</p>
+                    <p class="home-screen-message">His dog is Toby, a cocker spaniel, who has <a href="#" target="_blank">a profile</a> on Tindog, of course. The other Facebook dogs are from the <a href="https://www.facebook.com/groups/DogsBarcelona" target="_blank">Barcelona Dogs Facebook group</a>. The background images of Barcelona and the tutorial images of dogs are from <a href="https://unsplash.com/s/photos/barcelona" target="_blank">Unsplash</a>.</p>
 
-                    <p class="home-screen-message">Daniel doesn't have a website, linkedin profile, or anything like that yet. 
+                    <p class="home-screen-message">Daniel doesn't have a website, LinkedIn profile, or anything like that yet. 
                     If you want to get in touch with him, just <a href="mailto:danielbeckrose@gmail.com">email him</a> or <a href="https://www.facebook.com/danielbeckrose" target="_blank">message him on Facebook</a>.</p>
 
                     <button id="home-screen-back-button">Back</button>
@@ -720,22 +739,57 @@ function generateGeneralDecisionEffects(){
     discardPile.push(currentDog)
 }
 
+
+let numberOfDeadSuperLikeSwipes = 0 
+
 function superLike(){
-        profileIsExpanded ? unexpand() : ""
-        superLikesLeft--
-        generateGeneralDecisionEffects()
-        // currentDog.hasBeenSwiped = true 
-        currentDog.hasBeenSuperLiked = true 
-        // document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
-        // document.getElementById("badge-container").style.zIndex = "1"
-        document.getElementById("super-like-badge").style.display = "block"
-        document.getElementById("super-like-badge").classList.add("bounce-in-bck-3")
-        // discardPile.push(currentDog)
-        dogsToDisplay.length > 0 ? changeDogs("superLike") : noMoreDogs()
+    
+        if (superLikesLeft > 0){
+            profileIsExpanded ? unexpand("quick") : ""
+            superLikesLeft--
+            generateGeneralDecisionEffects()
+            // currentDog.hasBeenSwiped = true 
+            currentDog.hasBeenSuperLiked = true 
+            // document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
+            // document.getElementById("badge-container").style.zIndex = "1"
+            document.getElementById("super-like-badge").style.display = "block"
+            document.getElementById("super-like-badge").classList.add("bounce-in-bck-3")
+            // discardPile.push(currentDog)
+            dogsToDisplay.length > 0 ? changeDogs("superLike") : noMoreDogs()
+        } else {
+            numberOfDeadSuperLikeSwipes++ 
+            if (numberOfDeadSuperLikeSwipes === 2){
+                document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">You've run out of superlikes.</p>`
+                // document.getElementById("text-overlay-container").classList.remove("text-focus-in")
+                document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
+                document.getElementById("current-dog-photo").style.animation = ""
+                setTimeout(() => {
+                    document.getElementById("instruction") ? document.getElementById("instruction").remove() : ""
+                    numberOfDeadSuperLikeSwipes = 0
+                }, 2000);
+            }
+        }
+    updateSuperLikes()
+
+}
+
+function updateSuperLikes(){
+    document.getElementById("number-of-super-likes-left").innerHTML = `x${superLikesLeft}`
+    if (superLikesLeft <= 0) {
+         document.getElementById("number-of-super-likes-left").classList.add("no-super-likes-left")
+        document.getElementById("super-like-button").disabled = true 
+    }
+
+    superLikesLeft > 0 && document.getElementById("number-of-super-likes-left").classList.contains("no-super-likes-left") ? document.getElementById("number-of-super-likes-left").classList.remove("no-super-likes-left"):""
+
+    if (superLikesLeft === 0) {
+        document.getElementById("super-like-button").disabled = true
+        document.getElementById("super-like-button").removeEventListener(typeOfInteraction, superLike, {passive: true})
+    }
 }
 
 function like() {
-    profileIsExpanded ? unexpand() : ""
+    profileIsExpanded ? unexpand("quick") : ""
     currentDog.hasBeenSwiped = true 
     currentDog.hasBeenLiked = true
     document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
@@ -775,7 +829,7 @@ function like() {
  }
 
  function dislike() {
-    profileIsExpanded ? unexpand() : ""
+    profileIsExpanded ? unexpand("quick") : ""
     currentDog.hasBeenSwiped = true 
     discardPile.push(currentDog)
     document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
@@ -805,13 +859,14 @@ function like() {
     // document.getElementById("current-dog-photo").style.objectPosition = currentDog.secondaryObjectPosition
     document.getElementById("current-dog-photo").style.animation = "make-image-smaller 1s ease both, change-image-position 1s ease both"
     // document.getElementById("current-dog-photo").style.animation = "change-image-position 1s ease both"
-    document.getElementById("text-overlay-container").classList.remove("text-focus-in")
+    // document.getElementById("text-overlay-container").classList.remove("text-focus-in")
+    document.getElementById("profile-container").classList.remove("text-focus-in")
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.overflowY  = "scroll"
     document.getElementById("profile-card").innerHTML += currentDog.getExpandedProfileHtml()
 
 
-    if (needsTutorial === false) {
+    if (!needsTutorial) {
         document.getElementById("share-link").addEventListener(typeOfInteraction, share, {passive: true})
         document.getElementById("info-icon").removeEventListener(typeOfInteraction, expand, {passive: true}) 
         document.getElementById("info-icon").addEventListener(typeOfInteraction, unexpand, {passive: true})
@@ -828,7 +883,7 @@ function like() {
  }
 
 function share(){
-
+    unexpand("quick")
     let groupName
     groupBeingUsed === barcelonaFacebookDogs ? groupName = "Facebook" : groupName = "Rescue"
     let dogNameToUse
@@ -839,8 +894,6 @@ function share(){
     const twitterLink = `https://twitter.com/intent/tweet?url=${shareLink}&text=Check%20out%20my%20dog's%20profile%20on%20Tindog!`
     const whatsAppLink = `https://api.whatsapp.com/send?text=${shareLink}`
     const emailLink = `mailto:?subject=Now%20that's%20what%20I%20call%20a%20hot%20dog!&body=Check%20out%20${currentDog.name.replaceAll(' ', '%20')}'s%20profile%20on%20Tindog%20%E2%80%94%20the%20Tinder%20for%20dogs!%20The%20link%20is%20${shareLink}%0D%0A`
-    document.getElementById("current-dog-photo").style.transition = ""
-    document.getElementById("current-dog-photo").style.animation = ""
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
 
     document.getElementById("overall-container").innerHTML += 
@@ -866,7 +919,7 @@ function share(){
                             </div> 
                         </div>
 
-                        <button id="go-back-button">Never mind!</button>
+                        <button id="go-back-button">Go Back</button>
 
                     </div>
                 </div>`
@@ -876,19 +929,19 @@ function share(){
                     navigator.clipboard.writeText(`${directLink}`)
                 }, {passive: true})
     document.getElementById("go-back-button").addEventListener(typeOfInteraction, closeModal, {passive: true})
-    document.addEventListener('click',function(e){
+    document.addEventListener(typeOfInteraction,function(e){
         if(e.target && e.target.classList== 'share-button'){
             setTimeout(() => {
                 closeModal()
             }, 1000);
-
         }}, {passive: true})
 }
 
 function closeModal(){
     document.getElementById("share-modal-overlay-container").remove()
     render()
-    document.getElementById("text-overlay-container").classList.remove("text-focus-in")
+    addAllButtonEventListeners()
+    // document.getElementById("text-overlay-container").classList.remove("text-focus-in")
 }
 
 function loadApp(){
@@ -924,19 +977,21 @@ function searchForDog() {
         }
         if (dogNameToUse.toLowerCase() === dogToSearch.toLowerCase()){
             dogLoaded = true 
+            needsTutorial = false 
             spliceNumber = i 
             dogToLoad = groupToSearch[i]
             generateWelcomeScreen()
         } 
     }
-    if (dogLoaded === false) {
+    if (!dogLoaded) {
         generateWelcomeScreen()
     }
 
 }
 
 
-let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg"]
+let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", 
+                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.png"]
 
 // function loadAppAssets () {
 
