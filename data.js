@@ -31,8 +31,8 @@ const sampleDogs = [
         hasBeenSuperLiked: false
     },
     {
-        name: "A Sad Fake Dog",
-        avatar: "images/sadDog.png",
+        name: "Sad Fake Dog",
+        avatar: "images/sadDog.jpg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: "8",

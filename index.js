@@ -319,43 +319,34 @@ function disableTopButtons(){
 
 function generateWelcomeScreen(){
 
-    document.getElementById("profile-container").style.backgroundImage = 'url("images/Barcelona4.jpg")'
-    document.getElementById("profile-container").style.animation = "background-zoom-out 3s ease-in-out both"
-    document.getElementById("profile-container").classList.add("welcome-screen")
-    document.getElementById(`profile-container`).innerHTML = 
-         `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1">`
+    let variableHtml =  
+                `<p id="please-confirm-message" class="welcome-message">Please confirm you're not a cat by clicking the checkbox below:</p> 
+                
+                <div id="cat-confirmation-container" class="fade-in-effect-2">
+                    <div id="cat-confirmation-checkbox"></div>
+                    <div>I am not a cat. </div> 
+                </div>    `
 
-    
-    disableAllButtons()
-
-    if (dogLoaded) {
-
-        document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
-        
+    if (dogLoaded){
+        variableHtml = `<p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
         setTimeout(() => {
             document.getElementById("loading-message").innerText = `${dogToLoad.name} loaded!`
             document.getElementById("loading-message").style.color = 'rgb(0, 250, 0)'
 
-        }, 3000)
+        }, 3200)
 
-        setTimeout(() => {initialize(groupToSearch)}, 3700)
+        setTimeout(() => {
+            initialize(groupToSearch)}
+            , 3900)
 
     } else {
 
-        document.getElementById(`profile-container`).innerHTML += 
-        
-            `<p id="please-confirm-message" class="welcome-message">Please confirm you're not a cat by clicking the checkbox below:</p> 
-            
-            <div id="cat-confirmation-container" class="fade-in-effect-2">
-                <div id="cat-confirmation-checkbox"></div>
-                <div>I am not a cat. </div> 
-            </div>    `
-
-        document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
+        setTimeout(() => {
+            document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
                 document.getElementById("cat-confirmation-container").classList.remove("fade-in-effect-2")
                 document.getElementById("cat-confirmation-checkbox").innerHTML = `<img id="paw-print-checkmark" src="images/paw-print.png">`
                 document.getElementById("cat-confirmation-checkbox").style.background = "lightgreen"
-
+    
                 setTimeout(() => {
                     document.getElementById("cat-confirmation-container").style.animation = "none"
                     document.getElementById("please-confirm-message").style.animation = "none"
@@ -363,11 +354,55 @@ function generateWelcomeScreen(){
                     document.getElementById("please-confirm-message").style.visibility = "hidden" 
                     document.getElementById(`profile-container`).innerHTML += `<img id="security-logo" src="images/security-logo.png">`
                 }, 50)
-
+    
                 setTimeout(() => {
                     generateWelcomeScreen2()}, 1500)
-        }) 
+        })      
+        }, 1000);
+       
 }
+
+    document.getElementById("profile-container").style.backgroundImage = 'url("images/Barcelona4.jpg")'
+    document.getElementById("profile-container").style.animation = "background-zoom-out 3s ease-in-out both"
+    document.getElementById("profile-container").classList.add("welcome-screen")
+    document.getElementById(`profile-container`).innerHTML = 
+         `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1"> ${variableHtml}`   
+    
+    disableAllButtons()
+
+//     if (dogLoaded) {
+
+//         document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
+        
+//         setTimeout(() => {
+//             document.getElementById("loading-message").innerText = `${dogToLoad.name} loaded!`
+//             document.getElementById("loading-message").style.color = 'rgb(0, 250, 0)'
+
+//         }, 3200)
+
+//         setTimeout(() => {initialize(groupToSearch)}, 3900)
+
+//     } else {
+
+       
+
+//         document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
+//                 document.getElementById("cat-confirmation-container").classList.remove("fade-in-effect-2")
+//                 document.getElementById("cat-confirmation-checkbox").innerHTML = `<img id="paw-print-checkmark" src="images/paw-print.png">`
+//                 document.getElementById("cat-confirmation-checkbox").style.background = "lightgreen"
+
+//                 setTimeout(() => {
+//                     document.getElementById("cat-confirmation-container").style.animation = "none"
+//                     document.getElementById("please-confirm-message").style.animation = "none"
+//                     document.getElementById("tindog-logo").style.visibility = "hidden" 
+//                     document.getElementById("please-confirm-message").style.visibility = "hidden" 
+//                     document.getElementById(`profile-container`).innerHTML += `<img id="security-logo" src="images/security-logo.png">`
+//                 }, 50)
+
+//                 setTimeout(() => {
+//                     generateWelcomeScreen2()}, 1500)
+//         }) 
+// }
 
 
 
@@ -1039,7 +1074,7 @@ function searchForDog() {
 
 
 let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", 
-                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.png"]
+                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.jpg"]
 
 // function loadAppAssets () {
 
