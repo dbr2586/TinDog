@@ -339,8 +339,8 @@ function generateWelcomeScreen(){
                                                                          <p class="welcome-message-loading" id="loading-message-2">${dogToLoad.name} loaded! </p>` 
             
             setTimeout(() => {
-                document.getElementById("loading-message").style.display = "none"
-                document.getElementById("loading-message-2").style.display = "block"
+                document.getElementById("loading-message").style.visibility = "hidden"
+                document.getElementById("loading-message-2").style.visibility = "visible"
             }, 2000)
 
             setTimeout(() => {initialize(groupToSearch)}, 3000)
