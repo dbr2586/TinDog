@@ -319,22 +319,25 @@ function disableTopButtons(){
 
 function generateWelcomeScreen(){
 
+    let variableHtml =  
+    `<p id="please-confirm-message" class="welcome-message">Please confirm you're not a cat by clicking the checkbox below:</p> 
+    
+    <div id="cat-confirmation-container" class="fade-in-effect-2">
+        <div id="cat-confirmation-checkbox"></div>
+        <div>I am not a cat. </div> 
+    </div>    `
+
+    dogLoaded ? variableHtml = `<p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` : ""
+
     document.getElementById("profile-container").style.backgroundImage = 'url("images/Barcelona4.jpg")'
     document.getElementById("profile-container").style.animation = "background-zoom-out 3s ease-in-out both"
     document.getElementById("profile-container").classList.add("welcome-screen")
     document.getElementById(`profile-container`).innerHTML = 
          `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1"> ${variableHtml}`   
 
-    let variableHtml =  
-                `<p id="please-confirm-message" class="welcome-message">Please confirm you're not a cat by clicking the checkbox below:</p> 
-                
-                <div id="cat-confirmation-container" class="fade-in-effect-2">
-                    <div id="cat-confirmation-checkbox"></div>
-                    <div>I am not a cat. </div> 
-                </div>    `
+   
 
     if (dogLoaded){
-        variableHtml = `<p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
         setTimeout(() => {
             document.getElementById("loading-message").innerText = `${dogToLoad.name} loaded!`
             document.getElementById("loading-message").style.color = 'rgb(0, 250, 0)'
