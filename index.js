@@ -16,6 +16,7 @@ let dogsToDisplay
 let spliceNumber
 let groupToSearch
 let dogToLoad 
+let lastDog
 let clone = []
 let discardPile = [] 
 let undoPile = []
@@ -25,19 +26,36 @@ let touchstartY = 0
 let touchendX = 0
 let touchendY = 0 
 
+let clickstartX = 0
+let clickstartY = 0
+let clickendX = 0
+let clickendY = 0 
+
 
 let typeOfInteraction = "click"
+
 
 window.addEventListener("touchstart", function() {
     typeOfInteraction = "touchstart"
 })
 
+
     
 
 function checkDirection() {
-    touchendX + 75 < touchstartX ? dislike() 
-    : touchendX - 75 > touchstartX ? like()  
-         : touchendY + 75 < touchstartY ? superLike() : ""
+    let swipestartX = clickstartX
+    let swipestartY = clickstartY
+    let swipeendX = clickendX
+    let swipeendY = clickendY
+    if (typeOfInteraction === "touchstart"){
+        swipestartY = touchstartY
+        swipestartX = touchstartX
+        swipeendX = touchendX
+        swipeendY = touchendY
+    }
+    swipeendX + 75 < swipestartX ? dislike() 
+    : swipeendX - 75 > swipestartX ? like()  
+         : swipeendY + 75 < swipestartY ? superLike() : ""
 }
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
@@ -201,6 +219,7 @@ function updateButtons(){
 
     if (firstTimeRendering) {
         updateSuperLikes()
+        document.getElementById("profile-container").style.animation = ""
         document.getElementById("profile-container").classList.add("text-focus-in") 
         document.getElementById("dislike-button").disabled = false 
         document.getElementById("like-button").disabled = false 
@@ -226,6 +245,27 @@ function updateButtons(){
             touchendY = e.changedTouches[0].screenY
             checkDirection()
             }, {passive: true})
+
+            document.getElementById("profile-card").addEventListener('mousedown', (event) => {
+                const {
+                  clientX,
+                  clientY
+                } = event
+                clickstartX = clientX
+                clickstartY = clientY
+                console.log( clickstartX , clickstartY)
+              })
+            
+              document.getElementById("profile-card").addEventListener('mouseup', (event) => {
+                const {
+                  clientX,
+                  clientY
+                } = event
+                clickendX = clientX
+                clickendY = clientY
+                checkDirection()
+                console.log( clickendX , clickendY)
+              })
     }
 
     if (discardPile.length > 0 && !undoIsAlive && !needsTutorial) {
@@ -249,6 +289,7 @@ function render() {
     document.getElementById("profile-container").style.overflow = "hidden"
     document.getElementById(`profile-container`).innerHTML = currentDog.getProfileHtml()
     document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
+    document.getElementById("profile-container").style.animation = "none"
 
     updateButtons()
 
@@ -334,8 +375,16 @@ function generateWelcomeScreen(){
     document.getElementById(`profile-container`).innerHTML = 
          `<img src="images/TinDogLogo2.png" id="tindog-logo" class="fade-in-effect-1"> ${variableHtml}`   
     document.getElementById("profile-container").style.backgroundImage = 'url("images/Barcelona4.jpg")'
-    document.getElementById("profile-container").style.animation = "background-pan 3s ease-in-out both"
+    document.getElementById("profile-container").style.animation = "background-pan-initial 4s ease-in-out both"
     document.getElementById("profile-container").classList.add("welcome-screen")
+    
+    if (!dogLoaded) {
+        setTimeout(() => {
+
+        document.getElementById("profile-container").style.animation =  "background-pan-initial-linger 60s ease-in-out both alternate infinite"
+        
+    }, 4000)
+}
     
 
    
@@ -370,7 +419,7 @@ function generateWelcomeScreen(){
                 setTimeout(() => {
                     generateWelcomeScreen2()}, 1500)
         })      
-        }, 1000);
+        }, 4000);
        
 }
 
@@ -460,9 +509,13 @@ function generateWelcomeScreen(){
 }
 
 function generateWelcomeScreen2(){
-
     document.getElementById("profile-container").style.backgroundImage = "url('images/Barcelona.jpg')"
-    document.getElementById("profile-container").style.animation = "background-pan 3s ease-in-out both"
+    document.getElementById("profile-container").style.animation = "background-pan 4s ease-in-out both"
+    setTimeout(() => {
+
+        document.getElementById("profile-container").style.animation =  "background-pan-linger 60s ease-in-out both alternate infinite"
+        
+    }, 4000);
     document.getElementById("security-logo").remove()
     document.getElementById("please-confirm-message").remove()
     document.getElementById("tindog-logo").remove()
@@ -476,7 +529,7 @@ function generateWelcomeScreen2(){
 
     setTimeout(() => {  
         document.getElementById("next-button").addEventListener(typeOfInteraction, initialize)  
-    }, 2000)
+    }, 4000, {passive: true})
 
 }
     
@@ -515,6 +568,27 @@ function initialize(groupToUse){
             touchendY = e.changedTouches[0].screenY
             whichVersion === "tutorialVersion" ? checkDirectionTutorialVersion() : checkDirection()        
             }, {passive: true})    
+
+        document.getElementById("profile-card").addEventListener('mousedown', (event) => {
+            const {
+                clientX,
+                clientY
+            } = event
+            clickstartX = clientX
+            clickstartY = clientY
+            console.log( clickstartX , clickstartY)
+            })
+        
+            document.getElementById("profile-card").addEventListener('mouseup', (event) => {
+            const {
+                clientX,
+                clientY
+            } = event
+            clickendX = clientX
+            clickendY = clientY
+            checkDirection()
+            console.log( clickendX , clickendY)
+            })
     }
 
 function checkDirectionTutorialVersion(){
@@ -659,7 +733,10 @@ document.getElementById("profile-card").innerHTML = `<p id="instruction" class="
 
 
         document.getElementById("instruction").style.animation = "fade-in-effect-delayed 4s ease both"
-        document.getElementById("profile-container").style.animation = "background-zoom-out-3 3s ease-in-out both"
+        document.getElementById("profile-container").style.animation = "background-zoom-out-3 4s ease-in-out both"
+        setTimeout(() => {
+            document.getElementById("profile-container").style.animation = "background-zoom-out-3-linger 40s ease both alternate infinite"
+        }, 4000);
         document.getElementById("profile-container").style.backgroundImage = "url('images/Barcelona1.jpg')"
 }
 
@@ -893,28 +970,47 @@ function like() {
 
     let direction = "" 
     let kindOfDogToUse = ""
-    const lastDog = currentDog
+    let dogToGoAway = currentDog
+    let undoDog = undoPile[undoPile.length - 1]
     currentDog  = getNextDog()
 
     typeOfChange === "like" ? direction = "right" 
         : typeOfChange === "superLike" ? direction = "top" 
         : typeOfChange === "dislike" ? direction = "left"
         : typeOfChange === "undo" ? 
-            lastDog.hasBeenLiked ? direction = "right-reverse"
-            :lastDog.hasBeenSuperLiked ?  direction = "top-reverse"
+             undoDog.hasBeenLiked ? direction = "right-reverse"
+            :undoDog.hasBeenSuperLiked ?  direction = "top-reverse"
             : direction = "left-reverse" : ""
 
-    typeOfChange === "undo" ? kindOfDogToUse = lastDog : kindOfDogToUse = currentDog
+    // typeOfChange === "undo" ? kindOfDogToUse = lastDog : kindOfDogToUse = currentDog
 
-    setTimeout(() => {
-        document.getElementById("profile-card").classList.add(`swing-out-${direction}-fwd`)
-        document.getElementById("profile-container").style.backgroundImage = `url(${kindOfDogToUse.avatar}` 
-        document.getElementById("profile-container").style.backgroundPosition = kindOfDogToUse.initialObjectPosition 
-    }, 50)
+    // let time
 
-    setTimeout(() => {
+    // typeOfChange === "undo"? time = 150 : time = 150
+
+    if (typeOfChange === "like" || typeOfChange === "superLike" || typeOfChange === "dislike"){
+
+        setTimeout(() => {
+            document.getElementById("profile-card").classList.add(`swing-out-${direction}-fwd`)
+            document.getElementById("profile-container").style.backgroundImage = `url(${currentDog.avatar}` 
+            document.getElementById("profile-container").style.backgroundPosition = currentDog.initialObjectPosition 
+        }, 150)
+    
+        setTimeout(() => {
+            render() 
+        }, 550)
+
+    } else {
         render() 
-    }, 550)
+        document.getElementById("profile-container").style.backgroundImage = `url(${dogToGoAway.avatar}` 
+        document.getElementById("profile-container").style.backgroundPosition = dogToGoAway.initialObjectPosition 
+        document.getElementById("profile-card").classList.add(`swing-out-${direction}-fwd`)
+        setTimeout(() => {
+            render() 
+        }, 300);
+    }
+
+  
  }
 
  function dislike() {
