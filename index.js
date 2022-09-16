@@ -15,6 +15,9 @@ let profileBeingShown = false
 let firstTimeOnEndScreen = true 
 let storedInputValue = ""
 let buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter = false
+let likeDisabled = false
+let superlikeDisabled = false
+let dislikeDisabled = false 
 
 
 let groupBeingUsed = ""
@@ -112,7 +115,7 @@ function checkDirection(type) {
   
     swipeendX + 75 < swipestartX ? dislike() 
     : swipeendX - 75 > swipestartX ? like()  
-         : swipeendY + 75 < swipestartY ? superLike() : ""
+         : swipeendY + 75 < swipestartY && !profileIsExpanded ? superLike() : ""
 
 }
 
@@ -493,6 +496,9 @@ function render() {
     document.getElementById(`profile-container`).innerHTML = currentDog.getProfileHtml()
     document.getElementById("current-dog-photo").style.objectPosition = currentDog.initialObjectPosition
     document.getElementById("profile-container").style.animation = "none"
+    likeDisabled = false
+    superlikeDisabled = false
+    dislikeDisabled = false 
 
     updateButtons()
 
@@ -642,12 +648,12 @@ function generateWelcomeScreen(){
 
 function generateWelcomeScreen2(){
     document.getElementById("profile-container").style.backgroundImage = "url('images/Barcelona.jpg')"
-    document.getElementById("profile-container").style.animation = "background-pan 4s ease-in-out both"
+    document.getElementById("profile-container").style.animation = "background-pan 3s ease-in-out both"
     setTimeout(() => {
 
         document.getElementById("profile-container").style.animation =  "background-pan-linger 60s ease-in-out both alternate infinite"
         
-    }, 4000);
+    }, 3000);
     document.getElementById("security-logo").remove()
     document.getElementById("please-confirm-message").remove()
     document.getElementById("tindog-logo").remove()
@@ -661,7 +667,7 @@ function generateWelcomeScreen2(){
 
     setTimeout(() => {  
         document.getElementById("next-button").addEventListener(typeOfInteraction, initialize)  
-    }, 4000, {passive: true})
+    }, 3000, {passive: true})
 
 }
     
@@ -782,10 +788,32 @@ function removeSwipeEventListeners(whichOnes){
     }
 }
 
-function checkDirectionTutorialVersion(){
-    touchendX - 75 > touchstartX && tutorialStep === 1 && tutorialSwipeIsAlive ? tutorialStepTwo()
-        : touchendY + 75 < touchstartY && tutorialStep === 2 && tutorialSwipeIsAlive ? tutorialStepThree() 
-            : touchendX + 75 < touchstartX  && tutorialStep === 3 && tutorialSwipeIsAlive ? tutorialStepFour() : ""
+function checkDirectionTutorialVersion(type){
+
+    let swipestartX 
+    let swipestartY 
+    let swipeendX
+    let swipeendY
+
+    if (type === "mouse"){
+        swipestartX = clickstartX
+        swipestartY = clickstartY
+        swipeendX = clickendX
+        swipeendY = clickendY
+    }
+
+    if (type === "touch"){
+        swipestartY = touchstartY
+        swipestartX = touchstartX
+        swipeendX = touchendX
+        swipeendY = touchendY
+    }
+
+
+
+    swipeendX - 75 > swipestartX && tutorialStep === 1 && tutorialSwipeIsAlive ? tutorialStepTwo()
+        : swipeendY + 75 < swipestartY && tutorialStep === 2 && tutorialSwipeIsAlive ? tutorialStepThree() 
+            : swipeendX + 75 < swipestartX  && tutorialStep === 3 && tutorialSwipeIsAlive ? tutorialStepFour() : ""
 }
 
 let tutorialStep = 1 
@@ -821,7 +849,7 @@ function tutorialStepTwo(){
     document.getElementById("like-button").removeEventListener(typeOfInteraction, tutorialStepTwo, {passive: true} )
     setTimeout(() => {
         tutorialSwipeIsAlive = true
-        document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-2">Swipe up ⬆ or press the <img src="images/super-like-button.png" class="instruction-image"> button to superlike a dog! Try it now!</p>`
+        document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-2" id="second-instruction">Swipe up ⬆ or press the <img src="images/super-like-button.png" class="instruction-image"> button to superlike a dog! Try it now!</p>`
         document.getElementById("super-like-button").disabled = false
         document.getElementById("number-of-super-likes-left").classList.remove("no-super-likes-left")
         addSwipeEventListeners("tutorialVersion")
@@ -899,7 +927,7 @@ function tutorialStepSeven(){
 }
 
 function tutorialStepEight(){
-document.getElementById("profile-card").innerHTML = `<p id="instruction" class="instruction-overlay-3">There are two packs of dogs: rescue dogs from a local animal shelter and Facebook dogs from a local Facebook group. </p>
+document.getElementById("profile-card").innerHTML = `<p id="instruction" class="instruction-overlay-3 smaller-instructions">There are two packs of dogs: rescue dogs from a local animal shelter and Facebook dogs from a local Facebook group. </p>
     <div id="welcome-screen-buttons-container">
     <p id="choose-pack-message"><span>Choose a pack:</span></p>
     <div id="welcome-screen-buttons-container-inner">
@@ -963,7 +991,7 @@ function createCloneOf(groupToUse){
 }
 
 function unexpand(type) {
-    resetTouchData()
+    // resetTouchData()
     let animationDuration = ".5s"
     if (type === "quick"){
         animationDuration = ".2s"
@@ -980,22 +1008,23 @@ function unexpand(type) {
     if (!needsTutorial) {
         document.getElementById("info-icon").removeEventListener(typeOfInteraction, unexpand, {passive: true})
         document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true})
-        document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX
-            touchstartY = e.changedTouches[0].screenY
-            }, {passive: true})
-        document.getElementById("current-dog-photo").addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX
-            touchendY = e.changedTouches[0].screenY
-            checkDirection()
-        }, {passive: true})
-        document.getElementById("profile-card").removeEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX
-            }, {passive: true})
-        document.getElementById("profile-card").removeEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX
-            checkDirection()
-        }, {passive: true})
+        // addSwipeEventListeners()
+        // document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
+        //     touchstartX = e.changedTouches[0].screenX
+        //     touchstartY = e.changedTouches[0].screenY
+        //     }, {passive: true})
+        // document.getElementById("current-dog-photo").addEventListener('touchend', e => {
+        //     touchendX = e.changedTouches[0].screenX
+        //     touchendY = e.changedTouches[0].screenY
+        //     checkDirection()
+        // }, {passive: true})
+        // document.getElementById("profile-card").removeEventListener('touchstart', e => {
+        //     touchstartX = e.changedTouches[0].screenX
+        //     }, {passive: true})
+        // document.getElementById("profile-card").removeEventListener('touchend', e => {
+        //     touchendX = e.changedTouches[0].screenX
+        //     checkDirection()
+        // }, {passive: true})
     }
 
 }
@@ -1109,7 +1138,9 @@ let numberOfDeadSuperLikeSwipes = 0
 
 function superLike(){
     
-        if (superLikesLeft > 0){
+        if (superLikesLeft > 0 && !superlikeDisabled){
+            likeDisabled = true
+            dislikeDisabled = true 
             profileIsExpanded ? unexpand("quick") : ""
             superLikesLeft--
             generateGeneralDecisionEffects()
@@ -1155,16 +1186,20 @@ function updateSuperLikes(){
 }
 
 function like() {
-    console.log(typeOfInteraction)
-    profileIsExpanded ? unexpand("quick") : ""
-    currentDog.hasBeenSwiped = true 
-    currentDog.hasBeenLiked = true
-    document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
-    document.getElementById("badge-container").style.zIndex = "1"
-    document.getElementById("like-badge").style.display = "block"
-    document.getElementById("like-badge").classList.add("bounce-in-bck-2")
-    discardPile.push(currentDog)
-    dogsToDisplay.length > 0 ? changeDogs("like") : noMoreDogs()
+    if (!likeDisabled){
+        superlikeDisabled = true
+        dislikeDisabled = true 
+        console.log(typeOfInteraction)
+        profileIsExpanded ? unexpand("quick") : ""
+        currentDog.hasBeenSwiped = true 
+        currentDog.hasBeenLiked = true
+        document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
+        document.getElementById("badge-container").style.zIndex = "1"
+        document.getElementById("like-badge").style.display = "block"
+        document.getElementById("like-badge").classList.add("bounce-in-bck-2")
+        discardPile.push(currentDog)
+        dogsToDisplay.length > 0 ? changeDogs("like") : noMoreDogs()
+    }
  }
 
  function changeDogs(typeOfChange){
@@ -1215,15 +1250,18 @@ function like() {
  }
 
  function dislike() {
-    profileIsExpanded ? unexpand("quick") : ""
-    currentDog.hasBeenSwiped = true 
-    discardPile.push(currentDog)
-    document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
-    document.getElementById("badge-container").style.zIndex = "1"
-    document.getElementById("nope-badge").style.display = "block"
-    document.getElementById("nope-badge").classList.add("bounce-in-bck")
-    dogsToDisplay.length > 0 ? changeDogs("dislike") : noMoreDogs()
-    
+    if (!dislikeDisabled){
+        likeDisabled = true
+        superlikeDisabled = true 
+        profileIsExpanded ? unexpand("quick") : ""
+        currentDog.hasBeenSwiped = true 
+        discardPile.push(currentDog)
+        document.getElementById("profile-container").scrollTo({top: 0, behavior: "smooth"})
+        document.getElementById("badge-container").style.zIndex = "1"
+        document.getElementById("nope-badge").style.display = "block"
+        document.getElementById("nope-badge").classList.add("bounce-in-bck")
+        dogsToDisplay.length > 0 ? changeDogs("dislike") : noMoreDogs()
+    }
  }
 
  function resetTouchData(){
@@ -1235,7 +1273,7 @@ function like() {
 
  function expand(){
     console.log(typeOfInteraction)
-    resetTouchData()
+    // resetTouchData()
     document.documentElement.style.setProperty('--initial-image-position', `${currentDog.initialObjectPosition}`);
     document.documentElement.style.setProperty('--final-image-position', `${currentDog.secondaryObjectPosition}`);
     document.getElementById("info-icon").src = "images/down-arrow.png"
@@ -1257,13 +1295,14 @@ function like() {
         document.getElementById("share-link").addEventListener(typeOfInteraction, share, {passive: true})
         document.getElementById("info-icon").removeEventListener(typeOfInteraction, expand, {passive: true}) 
         document.getElementById("info-icon").addEventListener(typeOfInteraction, unexpand, {passive: true})
-        document.getElementById("profile-card").addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX
-            }, {passive: true})
-        document.getElementById("profile-card").addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX
-            checkDirection()
-            }, {passive: true})
+        addSwipeEventListeners()
+        // document.getElementById("profile-card").addEventListener('touchstart', e => {
+        //     touchstartX = e.changedTouches[0].screenX
+        //     }, {passive: true})
+        // document.getElementById("profile-card").addEventListener('touchend', e => {
+        //     touchendX = e.changedTouches[0].screenX
+        //     checkDirection()
+        //     }, {passive: true})
     }
 
     profileIsExpanded = true 
