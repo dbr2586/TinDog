@@ -374,6 +374,12 @@ button:disabled{
         grid-auto-flow: row;
         grid-template-areas:
           "nope-badge-area super-like-badge-area like-badge-area";
+          user-drag: none;  
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-drag: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
 }
 
 
@@ -492,6 +498,12 @@ button:disabled{
         right: 30px;  
         bottom: 20px;
         width: 40px; 
+        user-drag: none;  
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
 }
 
 #info-icon:hover{
@@ -1158,7 +1170,7 @@ a:hover {
       
         100%{
                 background-size: 190%;
-                background-position: 20% 80% ;
+                background-position: 20% 60% ;
                
         }
 }
@@ -1166,7 +1178,7 @@ a:hover {
 @keyframes background-pan-initial-linger {
         0% {
                 background-size: 190%;
-                background-position: 20% 80% ;
+                background-position: 20% 60% ;
                
         }
 

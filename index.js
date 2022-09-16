@@ -9,6 +9,14 @@ let hasSeenRescueDogs = false
 let userIsReturningToEndScreen = false
 let undoIsAlive = false 
 let needsTutorial = true  
+let cursorIsInOverlay = false 
+let listeningForInputType = true 
+let profileBeingShown = false 
+let firstTimeOnEndScreen = true 
+let storedInputValue = ""
+let buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter = false
+
+
 let groupBeingUsed = ""
 let nextDogToDisplay
 let currentDog 
@@ -32,31 +40,86 @@ let clickendX = 0
 let clickendY = 0 
 
 
-let typeOfInteraction = "click"
+let typeOfInteraction 
 
+window.addEventListener("click", function() {
+    if (listeningForInputType === true){
+        typeOfInteraction = "click"
+        listeningForInputType = false 
+        console.log(typeOfInteraction)
+        storedInputValue = "click"
+        if (profileBeingShown){
+            render()
+            addAllButtonEventListeners()
+            removeButtonEventListeners("touchstart")
+        }
+    }
+}, {once: true})
 
 window.addEventListener("touchstart", function() {
-    typeOfInteraction = "touchstart"
-})
+    if (listeningForInputType === true){
+        typeOfInteraction = "touchstart"
+        listeningForInputType = false 
+        console.log(typeOfInteraction)
+        storedInputValue = "touchstart"
+        if (profileBeingShown){
+            render()
+            addAllButtonEventListeners()
+            removeButtonEventListeners("click")
+        }
+    }}, {once: true})
+
+window.addEventListener("mouseover", function() {
+    if (listeningForInputType === true){
+        typeOfInteraction = "click"
+        listeningForInputType = false 
+        console.log(typeOfInteraction)
+        storedInputValue = "click"
+        if (profileBeingShown){
+            render()
+            addAllButtonEventListeners()
+            removeButtonEventListeners("touchstart")
+
+        }
+    }
+}, {once: true})
+
+
 
 
     
 
-function checkDirection() {
-    let swipestartX = clickstartX
-    let swipestartY = clickstartY
-    let swipeendX = clickendX
-    let swipeendY = clickendY
-    if (typeOfInteraction === "touchstart"){
+function checkDirection(type) {
+
+    let swipestartX 
+    let swipestartY 
+    let swipeendX
+    let swipeendY
+
+    if (type === "mouse"){
+        swipestartX = clickstartX
+        swipestartY = clickstartY
+        swipeendX = clickendX
+        swipeendY = clickendY
+    }
+
+    if (type === "touch"){
         swipestartY = touchstartY
         swipestartX = touchstartX
         swipeendX = touchendX
         swipeendY = touchendY
     }
+  
     swipeendX + 75 < swipestartX ? dislike() 
     : swipeendX - 75 > swipestartX ? like()  
          : swipeendY + 75 < swipestartY ? superLike() : ""
+
 }
+
+
+
+
+
 const shareLinkUrl = window.location.search
 const urlParams = new URLSearchParams(shareLinkUrl)
 const dogToSearch = urlParams.get("dog")
@@ -73,7 +136,6 @@ appHeight()
 
 function getNextDog(){
     if (dogLoaded){
-        dogLoaded = false 
         return new Dog(dogToLoad)
     }
     if (needsTutorial){
@@ -94,12 +156,23 @@ function getNextDog(){
 
 function noMoreDogs(){
 
+
+
     // removeSwipeModeEventListiners()
     groupBeingUsed === barcelonaFacebookDogs ? hasSeenFacebookDogs = true : hasSeenRescueDogs = true 
 
     let timeOutLength
 
+    
     disableAllButtons()
+    if (firstTimeOnEndScreen){
+        removeButtonEventListeners(typeOfInteraction)
+        firstTimeOnEndScreen = false 
+    }
+
+    buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter = true
+    
+  
 
     document.getElementById("number-of-super-likes-left").textContent = ""
 
@@ -180,8 +253,10 @@ function noMoreDogs(){
         
         document.getElementById("about-button").addEventListener(typeOfInteraction, function(){
             userIsReturningToEndScreen = true
+            buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter = false
             generateHomeScreen()
         }, {passive: true})
+
         document.getElementById("show-adoption-dogs-button") ? 
             document.getElementById("show-adoption-dogs-button").addEventListener(typeOfInteraction, function(){
                 reinitialize(barcelonaRescueDogs)
@@ -198,25 +273,54 @@ function noMoreDogs(){
 function addAllButtonEventListeners(){
 
     if (discardPile.length > 0) {
-        document.getElementById("undo-button").addEventListener(typeOfInteraction, undo, {passive: true})} 
+        document.getElementById("undo-button").addEventListener(typeOfInteraction, undo, {passive: true})
+    } 
     document.getElementById("like-button").addEventListener(typeOfInteraction, like, {passive: true})
     document.getElementById("super-like-button").addEventListener(typeOfInteraction, superLike, {passive: true})
     document.getElementById("dislike-button").addEventListener(typeOfInteraction, dislike, {passive: true})
-    document.getElementById("logo-icon").addEventListener(typeOfInteraction, generateHomeScreen, {passive: true})
+    document.getElementById("logo-icon").addEventListener(typeOfInteraction, function(){
+        generateHomeScreen()}, {passive: true})
     document.getElementById("profile-icon").addEventListener(typeOfInteraction, function(){
         generateProfileOrChatScreen("profile")}, {passive: true})
     document.getElementById("chat-icon").addEventListener(typeOfInteraction, function(){
         generateProfileOrChatScreen("chat")}, {passive: true})
+
+}
+
+function removeButtonEventListeners(whichKind){
+
+    if (discardPile.length > 0) {
+        document.getElementById("undo-button").removeEventListener(whichKind, undo, {passive: true})
+    } 
+    document.getElementById("like-button").removeEventListener(whichKind, like, {passive: true})
+    document.getElementById("super-like-button").removeEventListener(whichKind, superLike, {passive: true})
+    document.getElementById("dislike-button").removeEventListener(whichKind, dislike, {passive: true})
+    document.getElementById("logo-icon").removeEventListener(whichKind, generateHomeScreen, {passive: true})
+    document.getElementById("profile-icon").removeEventListener(whichKind, function(){
+        generateProfileOrChatScreen("profile")}, {passive: true})
+    document.getElementById("chat-icon").removeEventListener(whichKind, function(){
+        generateProfileOrChatScreen("chat")}, {passive: true})
+    document.getElementById("info-icon").removeEventListener(whichKind, expand, {passive: true}) 
+
 }
 
 function updateButtons(){
 
-    document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
+    // document.getElementById("profile-container").addEventListener("touchstart", function() {
+    //     if (typeOfInteraction === "click") {
+    //         typeOfInteraction = "touch"
+    //         updateButtons()
+    //     }
+    // }, {passive: true})
 
-    if (firstTimeRendering && !needsTutorial){
+
+
+
+    if (firstTimeRendering && !needsTutorial && !dogLoaded){
         addAllButtonEventListeners()
     }
 
+  
     if (firstTimeRendering) {
         updateSuperLikes()
         document.getElementById("profile-container").style.animation = ""
@@ -233,40 +337,12 @@ function updateButtons(){
     }
 
 
-    if (!needsTutorial) {
+    if (!needsTutorial && !dogLoaded) {
 
-        document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX
-            touchstartY = e.changedTouches[0].screenY
-            }, {passive: true})
+        document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
 
-            document.getElementById("current-dog-photo").addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX
-            touchendY = e.changedTouches[0].screenY
-            checkDirection()
-            }, {passive: true})
 
-            document.getElementById("profile-card").addEventListener('mousedown', (event) => {
-                const {
-                  clientX,
-                  clientY
-                } = event
-                clickstartX = clientX
-                clickstartY = clientY
-                console.log( clickstartX , clickstartY)
-              })
-            
-              document.getElementById("profile-card").addEventListener('mouseup', (event) => {
-                const {
-                  clientX,
-                  clientY
-                } = event
-                clickendX = clientX
-                clickendY = clientY
-                checkDirection()
-                console.log( clickendX , clickendY)
-              })
-    }
+        addSwipeEventListeners()
 
     if (discardPile.length > 0 && !undoIsAlive && !needsTutorial) {
         document.getElementById("undo-button").disabled = false
@@ -279,12 +355,139 @@ function updateButtons(){
         document.getElementById("undo-button").disabled = true
         undoIsAlive = false 
      }
+    }
+
+    if (dogLoaded){
+
+        if (typeOfInteraction === undefined) {
+
+        typeOfInteraction = "click"
+        addSwipeEventListeners()
+        addAllButtonEventListeners()
+        document.getElementById("info-icon").addEventListener("click", expand, {passive: true}) 
+
+        typeOfInteraction = "touchstart"
+        addSwipeEventListeners()
+        addAllButtonEventListeners()
+        document.getElementById("info-icon").addEventListener("touchstart", expand, {passive: true}) 
+        typeOfInteraction = ""
+
+        } else {
+            addSwipeEventListeners()
+            addAllButtonEventListeners()
+            document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
+        }
+      
+
+
+
+        // window.addEventListener("click", function(){
+        //     typeOfInteraction = "click"
+        //     removeSwipeEventListeners("touchstart")
+        //     removeButtonEventListeners("touchstart")
+        // }, { once: true })
+
+        // window.addEventListener("touchstart", function(){
+        //     typeOfInteraction = "touchstart"
+        //     removeSwipeEventListeners("click")
+        //     removeButtonEventListeners("click")
+        // }, { once: true })
+
+        dogLoaded = false 
+
+     
+        // createRetroEventListeners()
+
+    }
+
+    // function createRetroEventListeners(){
+
+    //     elementsToCheck = ["current-dog-photo", "info-icon", ]
+
+    // }
+
+
+    // function configureSwipeAndButtonInputs(event){
+    //     if (event === "clickRegistered"){
+    //         typeOfInteraction = "click"
+    //         finishConfiguration()
+
+    //     }
+
+    //     if (event === "touchRegistered"){
+    //         typeOfInteraction = "touchstart"
+    //         finishConfiguration()       
+    //     }
+    // }
+
+    // function finishConfiguration() {
+
+    //     addSwipeEventListeners()
+    //     addAllButtonEventListeners()
+    //     dogLoaded = false 
+    // }
+
+    // function generateRetroactiveEvent(){
+        
+
+    // }
+
+
+    // function addSwipeEventListeners(){
+    //     if (typeOfInteraction === "touchstart") { 
+
+    //         document.getElementById("current-dog-photo").addEventListener('touchstart', e => {
+    //                 touchstartX = e.changedTouches[0].screenX
+    //                 touchstartY = e.changedTouches[0].screenY
+    //                 }, {passive: true})
+
+    //             document.getElementById("current-dog-photo").addEventListener('touchend', e => {
+    //                 touchendX = e.changedTouches[0].screenX
+    //                 touchendY = e.changedTouches[0].screenY
+    //                 checkDirection()
+    //                 }, {passive: true})
+    //     }
+
+    //         if (typeOfInteraction === "click") { 
+
+    //             document.getElementById("current-dog-photo").addEventListener('mousedown', (event) => {
+    //                 const {
+    //                 clientX,
+    //                 clientY
+    //                 } = event
+    //                 clickstartX = clientX
+    //                 clickstartY = clientY
+    //                 console.log( clickstartX , clickstartY)
+    //             })
+            
+    //             document.getElementById("current-dog-photo").addEventListener('mouseup', (event) => {
+    //                 const {
+    //                 clientX,
+    //                 clientY
+    //                 } = event
+    //                 clickendX = clientX
+    //                 clickendY = clientY
+    //                 !cursorIsInOverlay ? checkDirection() : ""
+    //                 console.log( clickendX , clickendY)
+    //             })
+
+    //             document.getElementById('text-overlay-container').addEventListener("mouseenter", () => cursorIsInOverlay = true)
+    //             document.getElementById('text-overlay-container').addEventListener("mouseleave", () => cursorIsInOverlay = false)
+            
+    //         }
+
+    // }
+
+
+
 }
 
 
 
 
 function render() {
+    console.log(typeOfInteraction)
+    profileBeingShown = true 
    
     document.getElementById("profile-container").style.overflow = "hidden"
     document.getElementById(`profile-container`).innerHTML = currentDog.getProfileHtml()
@@ -403,7 +606,21 @@ function generateWelcomeScreen(){
     } else {
 
         setTimeout(() => {
-            document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
+            document.getElementById("cat-confirmation-checkbox").addEventListener("click", function() {
+                typeOfInteraction = "click"
+                catConfirmationObtained()
+            })
+
+            document.getElementById("cat-confirmation-checkbox").addEventListener("touchstart", function() {
+                typeOfInteraction = "touchstart"
+                catConfirmationObtained()
+            })}, 4000)
+
+
+
+
+
+        function catConfirmationObtained() {
                 document.getElementById("cat-confirmation-container").classList.remove("fade-in-effect-2")
                 document.getElementById("cat-confirmation-checkbox").innerHTML = `<img id="paw-print-checkmark" src="images/paw-print.png">`
                 document.getElementById("cat-confirmation-checkbox").style.background = "lightgreen"
@@ -418,95 +635,10 @@ function generateWelcomeScreen(){
     
                 setTimeout(() => {
                     generateWelcomeScreen2()}, 1500)
-        })      
-        }, 4000);
+        }
        
-}
+}}
 
-
-
-//     if (dogLoaded) {
-
-//         document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
-        
-//         setTimeout(() => {
-//             document.getElementById("loading-message").innerText = `${dogToLoad.name} loaded!`
-//             document.getElementById("loading-message").style.color = 'rgb(0, 250, 0)'
-
-//         }, 3200)
-
-//         setTimeout(() => {initialize(groupToSearch)}, 3900)
-
-//     } else {
-
-       
-
-//         document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
-//                 document.getElementById("cat-confirmation-container").classList.remove("fade-in-effect-2")
-//                 document.getElementById("cat-confirmation-checkbox").innerHTML = `<img id="paw-print-checkmark" src="images/paw-print.png">`
-//                 document.getElementById("cat-confirmation-checkbox").style.background = "lightgreen"
-
-//                 setTimeout(() => {
-//                     document.getElementById("cat-confirmation-container").style.animation = "none"
-//                     document.getElementById("please-confirm-message").style.animation = "none"
-//                     document.getElementById("tindog-logo").style.visibility = "hidden" 
-//                     document.getElementById("please-confirm-message").style.visibility = "hidden" 
-//                     document.getElementById(`profile-container`).innerHTML += `<img id="security-logo" src="images/security-logo.png">`
-//                 }, 50)
-
-//                 setTimeout(() => {
-//                     generateWelcomeScreen2()}, 1500)
-//         }) 
-// }
-
-
-
-    // let timeOutLength
-
-    // dogLoaded ? timeOutLength = 1000 : timeOutLength = 2500 
-
-    // setTimeout(() => {
-    //     document.getElementById("tindog-logo").classList.remove("fade-in-effect-1")
-
-    //     if (dogLoaded) {
-
-    //         document.getElementById(`profile-container`).innerHTML +=  ` <p class="welcome-message-loading shake-horizontal fade-in-effect-2" id="loading-message">Loading ${dogToLoad.name}...</p>` 
-            
-    //         setTimeout(() => {
-    //             document.getElementById("loading-message").innerText = `${dogToLoad.name} loaded!`
-    //             document.getElementById("loading-message").style.color = 'rgb(0, 250, 0)'
-
-    //         }, 2000)
-
-    //         setTimeout(() => {initialize(groupToSearch)}, 2700)
-            
-    //     } else {
-    //             document.getElementById(`profile-container`).innerHTML += 
-                
-    //                 `<p id="please-confirm-message" class="welcome-message">Please confirm you're not a cat by clicking the checkbox below:</p> 
-                    
-    //                 <div id="cat-confirmation-container" class="fade-in-effect-2">
-    //                     <div id="cat-confirmation-checkbox"></div>
-    //                     <div>I am not a cat. </div> 
-    //                 </div>    `
-    //             document.getElementById("cat-confirmation-checkbox").addEventListener(typeOfInteraction, function() {
-    //                     document.getElementById("cat-confirmation-container").classList.remove("fade-in-effect-2")
-    //                     document.getElementById("cat-confirmation-checkbox").innerHTML = `<img id="paw-print-checkmark" src="images/paw-print.png">`
-    //                     document.getElementById("cat-confirmation-checkbox").style.background = "lightgreen"
-    //                     setTimeout(() => {
-    //                         document.getElementById("cat-confirmation-container").style.animation = "none"
-    //                         document.getElementById("please-confirm-message").style.animation = "none"
-    //                         document.getElementById("tindog-logo").style.visibility = "hidden" 
-    //                         document.getElementById("please-confirm-message").style.visibility = "hidden" 
-    //                         document.getElementById(`profile-container`).innerHTML += `<img id="security-logo" src="images/security-logo.png">`
-    //                     }, 50)
-
-    //                     setTimeout(() => {
-    //                         generateWelcomeScreen2()}, 1500)
-    //             }) 
-    //     }
-    // }, timeOutLength)
-}
 
 function generateWelcomeScreen2(){
     document.getElementById("profile-container").style.backgroundImage = "url('images/Barcelona.jpg')"
@@ -555,21 +687,27 @@ function initialize(groupToUse){
     }
 }
 
- function addSwipeEventListeners(whichVersion){
 
+function removeSwipeEventListeners(whichOnes){
 
-        document.getElementById("profile-card").addEventListener('touchstart', e => {
+    if (whichOnes === "touchstart"){
+
+        document.getElementById("profile-card").removeEventListener('touchstart', e => {
             touchstartX = e.changedTouches[0].screenX
             touchstartY = e.changedTouches[0].screenY
             }, {passive: true})
     
-        document.getElementById("profile-card").addEventListener('touchend', e => {
+        document.getElementById("profile-card").removeEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX
             touchendY = e.changedTouches[0].screenY
             whichVersion === "tutorialVersion" ? checkDirectionTutorialVersion() : checkDirection()        
-            }, {passive: true})    
+            }, {passive: true})  
 
-        document.getElementById("profile-card").addEventListener('mousedown', (event) => {
+    }
+
+    if (whichOnes === "click"){
+
+        document.getElementById("current-dog-photo").removeEventListener('mousedown', (event) => {
             const {
                 clientX,
                 clientY
@@ -578,18 +716,71 @@ function initialize(groupToUse){
             clickstartY = clientY
             console.log( clickstartX , clickstartY)
             })
-        
-            document.getElementById("profile-card").addEventListener('mouseup', (event) => {
+
+        document.getElementById("current-dog-photo").removeEventListener('mouseup', (event) => {
             const {
                 clientX,
                 clientY
             } = event
             clickendX = clientX
             clickendY = clientY
-            checkDirection()
+            !cursorIsInOverlay ?  
+                whichVersion === "tutorialVersion" ? checkDirectionTutorialVersion() : checkDirection() : ""       
+
             console.log( clickendX , clickendY)
             })
+
+        document.getElementById('text-overlay-container').removeEventListener("mouseenter", () => cursorIsInOverlay = true)
+        document.getElementById('text-overlay-container').removeEventListener("mouseleave", () => cursorIsInOverlay = false)
+
+}
+}
+
+ function addSwipeEventListeners(whichVersion){
+
+    if (typeOfInteraction === "touchstart"){
+        document.getElementById("profile-card").addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX
+            touchstartY = e.changedTouches[0].screenY
+            }, {passive: true})
+    
+        document.getElementById("profile-card").addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX
+            touchendY = e.changedTouches[0].screenY
+            whichVersion === "tutorialVersion" ? checkDirectionTutorialVersion("touch") : checkDirection("touch")        
+            }, {passive: true})    
     }
+
+    if (typeOfInteraction === "click") { 
+
+        document.getElementById("current-dog-photo").addEventListener('mousedown', (event) => {
+            const {
+                clientX,
+                clientY
+            } = event
+            clickstartX = clientX
+            clickstartY = clientY
+            console.log( clickstartX , clickstartY)
+            })
+
+        document.getElementById("current-dog-photo").addEventListener('mouseup', (event) => {
+            const {
+                clientX,
+                clientY
+            } = event
+            clickendX = clientX
+            clickendY = clientY
+            !cursorIsInOverlay ?  
+                whichVersion === "tutorialVersion" ? checkDirectionTutorialVersion("mouse") : checkDirection("mouse") : ""       
+
+            console.log( clickendX , clickendY)
+            })
+
+        document.getElementById('text-overlay-container').addEventListener("mouseenter", () => cursorIsInOverlay = true)
+        document.getElementById('text-overlay-container').addEventListener("mouseleave", () => cursorIsInOverlay = false)
+        
+    }
+}
 
 function checkDirectionTutorialVersion(){
     touchendX - 75 > touchstartX && tutorialStep === 1 && tutorialSwipeIsAlive ? tutorialStepTwo()
@@ -752,6 +943,8 @@ function prepareForNormalInitialization(){
 
 
 function reinitialize(groupToUse){
+    buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter = false 
+    firstTimeOnEndScreen = true
     discardPile = [] 
     undoPile = []
     document.getElementById("profile-container").style.backgroundImage = "none"
@@ -814,28 +1007,33 @@ function removeOtherScreen() {
 }
 
 function generateHomeScreen(){
-    console.log("hello")
-    removeOtherScreen()
-    profileIsExpanded ? unexpand() : ""
-    disableBottomButtons()
-    document.getElementById("profile-container").innerHTML += `
-    
-                    <div id="home-screen-container" class="fade-in-effect">
+    if (!buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter){
+        if (userIsReturningToEndScreen){
+             buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter = true
+        }
+        console.log(typeOfInteraction)
+        removeOtherScreen()
+        profileIsExpanded ? unexpand() : ""
+        disableBottomButtons()
+        document.getElementById("profile-container").innerHTML += `
+        
+                        <div id="home-screen-container" class="fade-in-effect">
 
-                    <img src="images/TinDogLogo2.png" id="tindog-logo-2">
+                        <img src="images/TinDogLogo2.png" id="tindog-logo-2">
 
-                    <p class="home-screen-message">Tindog was created by Daniel Beck Rose as a project
-                    for the <a href="https://scrimba.com/learn/frontend">Scrimba Frontend Developer course</a>.</p>   
+                        <p class="home-screen-message">Tindog was created by Daniel Beck Rose as a project
+                        for the <a href="https://scrimba.com/learn/frontend">Scrimba Frontend Developer course</a>.</p>   
 
-                    <p class="home-screen-message">His dog is Toby, a cocker spaniel, who has <a href="#" target="_blank">a profile</a> on Tindog, of course. The other Facebook dogs are from the <a href="https://www.facebook.com/groups/DogsBarcelona" target="_blank">Barcelona Dogs Facebook group</a>. The background images of Barcelona and the tutorial images of dogs are from <a href="https://unsplash.com/s/photos/barcelona" target="_blank">Unsplash</a>.</p>
+                        <p class="home-screen-message">His dog is Toby, a cocker spaniel, who has <a href="#" target="_blank">a profile</a> on Tindog, of course. The other Facebook dogs are from the <a href="https://www.facebook.com/groups/DogsBarcelona" target="_blank">Barcelona Dogs Facebook group</a>. The background images of Barcelona and the tutorial images of dogs are from <a href="https://unsplash.com/s/photos/barcelona" target="_blank">Unsplash</a>.</p>
 
-                    <p class="home-screen-message">Daniel doesn't have a website, LinkedIn profile, or anything like that yet. 
-                    If you want to get in touch with him, just <a href="mailto:danielbeckrose@gmail.com">email him</a> or <a href="https://www.facebook.com/danielbeckrose" target="_blank">message him on Facebook</a>.</p>
+                        <p class="home-screen-message">Daniel doesn't have a website, LinkedIn profile, or anything like that yet. 
+                        If you want to get in touch with him, just <a href="mailto:danielbeckrose@gmail.com">email him</a> or <a href="https://www.facebook.com/danielbeckrose" target="_blank">message him on Facebook</a>.</p>
 
-                    <button id="home-screen-back-button">Back</button>
-                     </div>`
-    document.getElementById("home-screen-back-button").addEventListener(typeOfInteraction, function(){
-        goBack("home")}, {passive: true})
+                        <button id="home-screen-back-button">Back</button>
+                        </div>`
+        document.getElementById("home-screen-back-button").addEventListener(typeOfInteraction, function(){
+            goBack("home")}, {passive: true})
+    }
 
 }
 
@@ -866,6 +1064,8 @@ function enableBottomButtons(){
 }
 
 function generateProfileOrChatScreen(whichOne){
+    if (!buttonsWouldBeFullyDisabledIfYouWroteTheCodeBetter){
+    console.log(typeOfInteraction)
     removeOtherScreen()
     profileIsExpanded ? unexpand() : ""
     disableBottomButtons()
@@ -895,7 +1095,7 @@ function generateProfileOrChatScreen(whichOne){
     document.getElementById(`${whichOne}-screen-back-button`).addEventListener(typeOfInteraction, function(){
         goBack(whichOne)}, {passive: true})
 
-}
+}}
 
 function generateGeneralDecisionEffects(){
     currentDog.hasBeenSwiped = true 
@@ -923,7 +1123,7 @@ function superLike(){
             dogsToDisplay.length > 0 ? changeDogs("superLike") : noMoreDogs()
         } else {
             numberOfDeadSuperLikeSwipes++ 
-            if (numberOfDeadSuperLikeSwipes === 2){
+            if (numberOfDeadSuperLikeSwipes === 1){
                 document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">You've run out of superlikes.</p>`
                 // document.getElementById("text-overlay-container").classList.remove("text-focus-in")
                 document.getElementById("info-icon").addEventListener(typeOfInteraction, expand, {passive: true}) 
@@ -955,6 +1155,7 @@ function updateSuperLikes(){
 }
 
 function like() {
+    console.log(typeOfInteraction)
     profileIsExpanded ? unexpand("quick") : ""
     currentDog.hasBeenSwiped = true 
     currentDog.hasBeenLiked = true
@@ -1033,6 +1234,7 @@ function like() {
  }
 
  function expand(){
+    console.log(typeOfInteraction)
     resetTouchData()
     document.documentElement.style.setProperty('--initial-image-position', `${currentDog.initialObjectPosition}`);
     document.documentElement.style.setProperty('--final-image-position', `${currentDog.secondaryObjectPosition}`);
@@ -1176,19 +1378,7 @@ function searchForDog() {
 
 
 let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", 
-                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.jpg"]
-
-// function loadAppAssets () {
-
-//     for (let i = 0; i < images.length; ++i) {
-//         let img = new Image();
-//         img.src = images[i];
-//         i = images.length - 1 ? loadApp() : ""
-//     }
-// }
-
-// loadAppAssets()
-
+                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Luna2.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.jpg"]
 
 
 let loadingDotsTimer = setInterval(loadingDots, 200)

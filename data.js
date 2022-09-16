@@ -378,6 +378,17 @@ const barcelonaFacebookDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     },{
+        name: "Luna",
+        shareName: "Luna2",
+        avatar: "images/Luna2.jpeg",
+        initialObjectPosition: "90% 90%",
+        secondaryObjectPosition: "center 70%",
+        age: 8,
+        bio: `Love walks, chasing birds and doing tricks for treats. Always the boss of the group.`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },{
         name: "Miles",
         avatar: "images/Miles.jpeg",
         initialObjectPosition: "center",
