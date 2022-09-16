@@ -1152,7 +1152,7 @@ function superLike(){
             document.getElementById("super-like-badge").classList.add("bounce-in-bck-3")
             // discardPile.push(currentDog)
             dogsToDisplay.length > 0 ? changeDogs("superLike") : noMoreDogs()
-        } else {
+        } else if (!superlikeDisabled) {
             numberOfDeadSuperLikeSwipes++ 
             if (numberOfDeadSuperLikeSwipes === 1){
                 document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay">You've run out of superlikes.</p>`
