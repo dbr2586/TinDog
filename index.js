@@ -43,6 +43,8 @@ let clickstartY = 0
 let clickendX = 0
 let clickendY = 0 
 
+let data = {}
+
 
 let typeOfInteraction 
 
@@ -152,9 +154,58 @@ function getNextDog(){
     }
 }
 
+
+function  getDogResults() {
+    for (let i = 0; i < discardPile.length; i++){
+
+    }
+    return discardPile.map(function(dog){
+        let name 
+        let score
+        dog.shareName ? name = dog.shareName : name = dog.name
+        dog.hasBeenSuperLiked ? score = 2 : dog.hasBeenLiked? score = 1 : score = -1
+        return name = score })}
+
+
+
+
 function noMoreDogs(){
 
+ 
+    
+    getData()
 
+    function getData() {
+         for (let i = 0; i < discardPile.length; i++){
+            let name 
+            let score
+            discardPile[i].shareName ? name = discardPile[i].shareName : name = discardPile[i].name
+            discardPile[i].hasBeenSuperLiked ? score = 2 : discardPile[i].hasBeenLiked? score = 1 : score = -1
+            data[name] = score
+    }}
+
+
+   
+    fetch('https://api.sheetmonkey.io/form/qwtJVnVnRvxkEwHjdrbKUd', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then((result) => {
+      // Handle the result
+    })
+
+
+
+//     let formContent = getDogResults()
+
+//      document.body.innerHTML = `<form id="results" action="https://api.sheetmonkey.io/form/qwtJVnVnRvxkEwHjdrbKUd" method="post"
+//                                     ${formContent}
+//                                 </form> `
+     
+     
+//    document.getElementById("results").submit() 
 
     // removeSwipeModeEventListiners()
     groupBeingUsed === barcelonaFacebookDogs ? hasSeenFacebookDogs = true : hasSeenRescueDogs = true 
@@ -999,6 +1050,7 @@ function reinitialize(groupToUse){
     firstTimeOnEndScreen = true
     discardPile = [] 
     undoPile = []
+    data = {}
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.animation = ""
     document.getElementById("profile-container").classList.remove("final-screen")
@@ -1393,7 +1445,10 @@ function closeModal(){
     // document.getElementById("text-overlay-container").classList.remove("text-focus-in")
 }
 
+
+
 function loadApp(){
+   
 
     // document.getElementById("header-button-container").style.opacity = "0.3"
     // document.getElementById("button-container").style.opacity = "0.3"

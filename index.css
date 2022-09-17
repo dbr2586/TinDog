@@ -186,6 +186,15 @@ button:disabled{
                 filter: contrast(.5)
         }
 
+        #go-back-button:hover{
+                opacity: .5;
+                 
+        }
+
+        #about-button:hover{ 
+                background: rgb(211, 255, 211);
+        }
+
 }
 
 
@@ -622,9 +631,7 @@ button:disabled{
 
 }
 
-#about-button:hover{ 
-        background: rgb(211, 255, 211);
-}
+
 
 
 
@@ -843,10 +850,7 @@ button:disabled{
         background: black;
 }
 
-#go-back-button:hover{
-        opacity: .5;
-         
-}
+
 
 #copy-link-button-container{
         position: relative; 
