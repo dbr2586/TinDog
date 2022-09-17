@@ -1337,7 +1337,7 @@ function share(){
     const shareLink = currentDog.generateShareLink(dogNameToUse, groupName)
     const directLink = currentDog.generateDirectLink(dogNameToUse, groupName)
     const faceBookLink = `https://www.facebook.com/sharer/sharer.php?u=${shareLink}`
-    const twitterLink = `https://twitter.com/intent/tweet?url=${shareLink}&text=Check%20out%20my%20dog's%20profile%20on%20Tindog!`
+    const twitterLink = `https://twitter.com/intent/tweet?url=${shareLink}&text=Check%20out%20this%20dog's%20profile%20on%20Tindog!`
     const whatsAppLink = `https://api.whatsapp.com/send?text=${shareLink}`
     const emailLink = `mailto:?subject=Now%20that's%20what%20I%20call%20a%20hot%20dog!&body=Check%20out%20${currentDog.name.replaceAll(' ', '%20')}'s%20profile%20on%20Tindog%20%E2%80%94%20the%20Tinder%20for%20dogs!%20The%20link%20is%20${shareLink}%0D%0A`
     document.getElementById("text-overlay-container").innerHTML = currentDog.getTextOverlayHtml()
