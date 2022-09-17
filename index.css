@@ -568,6 +568,7 @@ button:disabled{
         flex-direction: column;
         padding: 41.25px 37.5px 0 37.5px;
         align-items: center;
+        overflow: scroll;
 }
 
 #profile-screen-container{
@@ -2218,6 +2219,9 @@ a:hover {
         .instruction-overlay-2 {
                 top: 250px;
         }
+       
+
+
 }
 
 @media only screen 
@@ -2262,3 +2266,5 @@ a:hover {
                 }
 
         }
+
+        
