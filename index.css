@@ -121,7 +121,7 @@ button:disabled{
 }
 
 #logo-icon:hover, #chat-icon:hover, #profile-icon:hover{
-        opacity: .5;
+        filter:brightness(1.5)
 }
 
 
@@ -143,23 +143,48 @@ button:disabled{
 }
 
 @media(hover: hover) and (pointer: fine){
-        #like-button:hover { 
-                opacity: .5;
-            }
-
         
-
-        #dislike-button:hover { 
-                opacity: .5;
+        #undo-button:hover {
+                background: rgb(243, 243, 212);
+                background-image: url("images/undo-arrow.png");
+                background-size: 65%;
+                background-position: center;
+                background-repeat: no-repeat;
         }
         
-        #undo-button:hover{
-                opacity: .5;
+        #dislike-button:hover {
+                background: rgb(255, 220, 220);
+                background-image: url("images/icon-cross.png");
+                background-size: 55%;
+                background-position: center;
+                background-repeat: no-repeat;
         }
         
-        #super-like-button:hover{
-                opacity: .5;
-                }
+        #like-button:hover {
+                background: #d5fef3;
+                background-image: url("images/icon-heart.png");
+                background-size: 55%;
+                background-position: 50% 55%; 
+                background-repeat: no-repeat;
+              
+        }
+        
+        #super-like-button:hover {
+                background: rgb(192, 255, 251);
+                background-image: url("images/super-like-button.png");
+                background-size: 55%;
+                background-position: center;
+                background-repeat: no-repeat;
+        }
+
+        #home-screen-back-button:hover, #profile-screen-back-button:hover, #chat-screen-back-button:hover{ 
+                filter:brightness(1.2)
+        }
+
+        #info-icon:hover{
+                cursor: pointer; 
+                filter: contrast(.5)
+        }
 
 }
 
@@ -250,7 +275,7 @@ button:disabled{
 }
 
 .instruction-overlay-2 {
-        top: 250px;
+        top: 0px;
 }
 
 .instruction-overlay-3 {
@@ -506,10 +531,7 @@ button:disabled{
         -ms-user-select: none;
 }
 
-#info-icon:hover{
-        cursor: pointer; 
-        opacity: .5
-}
+
 
 #tindog-logo{
         margin-top: -10px;
@@ -554,13 +576,23 @@ button:disabled{
         margin-bottom: 15px;
         width: 112.5px;
         height: 37.5px;
-        background: linear-gradient(rgb(188, 255, 188), rgb(101, 255, 101));
+        background: linear-gradient(rgb(188, 255, 188), rgb(173, 255, 173));
         box-shadow: 5px 5px 5px black;
 }
 
 #ready-button {
         margin-top: 20px;
         font-weight: 700;
+}
+
+#ready-button:hover {
+        filter:brightness(1.2);
+        background: linear-gradient(rgb(214, 255, 214), rgb(175, 252, 175));
+
+}
+
+.hover-effect:hover {
+        opacity: 0.5
 }
 
 #next-button {
@@ -570,7 +602,7 @@ button:disabled{
         height: 50px;
         font-weight: 700;
         font-size: 20px;
-        animation: fade-in-effect-delayed 6s ease both
+        animation: fade-in-effect-delayed 4s ease both
 
 }
 
@@ -594,9 +626,7 @@ button:disabled{
         background: rgb(211, 255, 211);
 }
 
-#home-screen-back-button:hover, #profile-screen-back-button:hover, #chat-screen-back-button:hover{ 
-        opacity: .5;
-}
+
 
 .final-screen, .welcome-screen{
         display: flex;
@@ -630,7 +660,7 @@ button:disabled{
         text-align: center;}
 
 #welcome-screen-buttons-container{
-        animation: fade-in-effect-delayed 8s ease both;
+        animation: fade-in-effect-delayed 6s ease both;
         position: absolute;
         bottom: 0;
         z-index: 1;
@@ -700,7 +730,7 @@ button:disabled{
 
 .welcome-screen-button:hover{
         
-        opacity: .6
+        opacity: .4
 }
 
 .welcome-screen-button:first-of-type{
@@ -713,7 +743,7 @@ button:disabled{
 
 #cat-confirmation-container{
         padding: 10px;
-        animation: fade-in-effect-delayed 8s ease both;
+        animation: fade-in-effect-delayed 6s ease both;
         border-radius: 5px;
         margin-bottom: 37.5px;
         background: rgba(1,1,1,.5);
@@ -844,6 +874,31 @@ button:disabled{
 
 
 
+
+#click-here-speech-bubble-container{
+        width: 160px;
+        bottom: 180px;
+        left: 35.25px;
+        position: relative 
+}
+
+#click-here-speech-bubble, #click-here-speech-bubble-message {
+        color: magenta;
+        position: absolute;
+        width: 100%;
+}
+
+#click-here-speech-bubble-message {
+        padding: 16px;
+        font-size: 16px;
+        line-height: 20px;
+        margin-left: 80px;
+        margin-top: 14.5px;
+}
+
+
+
+
 #security-logo{
         animation: fade-in-effect .5s;
         position: absolute;
@@ -854,7 +909,7 @@ button:disabled{
 
 #please-confirm-message{
         padding: 8px;
-        animation: fade-in-effect-delayed 8s ease both; 
+        animation: fade-in-effect-delayed 6s ease both; 
         margin-top: -177px;
 }
 
@@ -1036,7 +1091,7 @@ a:hover {
         text-shadow: 0 0 4px black;
         color: cyan;
         margin-bottom: 0;
-        animation: fade-in-effect-delayed 6s ease both 
+        animation: fade-in-effect-delayed 4s ease both 
 }
 
 

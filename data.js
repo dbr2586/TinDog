@@ -42,6 +42,52 @@ const sampleDogs = [
         hasBeenSuperLiked: false
     }, {
         name: "Yet Another Fake Dog",
+        shareName: "sampleDog", 
+        avatar: "images/sampleDog3.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 3,
+        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+]
+
+const sampleDogs2 = [
+    {
+        name: "Fake Dog",
+        avatar: "images/sampleDog1.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 5,
+        bio: "",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },{
+        name: "Another Fake Dog",
+        avatar: "images/sampleDog2.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 1,
+        bio: "",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },{
+        name: "Sad Fake Dog",
+        avatar: "images/sadDog.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: "8",
+        bio: "",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    }, {
+        name: "Yet Another Fake Dog",
+        shareName: "sampleDog", 
         avatar: "images/sampleDog3.jpg",
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
@@ -1034,4 +1080,4 @@ const barcelonaRescueDogs = [
 
 
 
-export {barcelonaFacebookDogs, barcelonaRescueDogs, sampleDogs}
+export {barcelonaFacebookDogs, barcelonaRescueDogs, sampleDogs, sampleDogs2}
