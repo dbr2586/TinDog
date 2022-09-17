@@ -1076,7 +1076,7 @@ function generateHomeScreen(){
                         <p class="home-screen-message">Tindog was created by Daniel Beck Rose as a project
                         for the <a href="https://scrimba.com/learn/frontend">Scrimba Frontend Developer course</a>.</p>   
 
-                        <p class="home-screen-message">His dog is Toby, a cocker spaniel, who has <a href="#" target="_blank">a profile</a> on Tindog, of course. The other Facebook dogs are from the <a href="https://www.facebook.com/groups/DogsBarcelona" target="_blank">Barcelona Dogs Facebook group</a>. The background images of Barcelona and the tutorial images of dogs are from <a href="https://unsplash.com/s/photos/barcelona" target="_blank">Unsplash</a>.</p>
+                        <p class="home-screen-message">His dog is Toby, a cocker spaniel, who has <a href="https://tindogbarcelona.netlify.app/?dog=toby&group=facebook" target="_blank">a profile</a> on Tindog, of course. The other Facebook dogs are from the <a href="https://www.facebook.com/groups/DogsBarcelona" target="_blank">Barcelona Dogs Facebook group</a>. The background images of Barcelona and the tutorial images of dogs are from <a href="https://unsplash.com/s/photos/barcelona" target="_blank">Unsplash</a>.</p>
 
                         <p class="home-screen-message">Daniel doesn't have a website, LinkedIn profile, or anything like that yet. 
                         If you want to get in touch with him, just <a href="mailto:danielbeckrose@gmail.com">email him</a> or <a href="https://www.facebook.com/danielbeckrose" target="_blank">message him on Facebook</a>.</p>

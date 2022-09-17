@@ -45,10 +45,10 @@ class Dog{
          }    
 
     generateShareLink(dogName, groupName){
-        return `www.whatever.com/?dog=${dogName.replaceAll(' ', '%20')}%26group=${groupName}`
+        return `https://tindogbarcelona.netlify.app/?dog=${dogName.replaceAll(' ', '%20')}%26group=${groupName}`
     }
     generateDirectLink(dogName, groupName){
-        return `www.whatever.com/?dog=${dogName.replaceAll(' ', '%20')}&group=${groupName}`
+        return `https://tindogbarcelona.netlify.app/?dog=${dogName.replaceAll(' ', '%20')}&group=${groupName}`
     }
 }
 
