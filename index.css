@@ -513,6 +513,11 @@ button:disabled{
         text-align: center;
 }
 
+#share-link-span{
+        color: rgb(174, 0, 0);
+        font-weight: 800;
+}
+
 #profile-footer p:hover {
         color: rgb(230, 0, 0); 
         

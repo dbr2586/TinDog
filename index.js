@@ -673,7 +673,7 @@ function generateWelcomeScreen(){
             document.getElementById("cat-confirmation-checkbox").addEventListener("touchstart", function() {
                 typeOfInteraction = "touchstart"
                 catConfirmationObtained()
-            })}, 3000)
+            }, {passive: true})}, 3000)
 
 
 
@@ -719,8 +719,8 @@ function generateWelcomeScreen2(){
                          <button id="next-button">Next</button>`    
 
     setTimeout(() => {  
-        document.getElementById("next-button").addEventListener(typeOfInteraction, initialize)  
-    }, 2000, {passive: true})
+        document.getElementById("next-button").addEventListener(typeOfInteraction, initialize, {passive: true})  
+    }, 2000)
 
 }
     
@@ -969,20 +969,22 @@ function tutorialStepSix(){
     makeStuffLookInactive()
     document.getElementById("info-icon").style.opacity = "1"
     setTimeout(() => {
-        document.getElementById("info-icon").style.opacity = "1"
+        document.getElementById("info-icon").style.opacity = ".5"
         document.getElementById("info-icon").style.cursor = "pointer"
         document.getElementById("current-dog-photo").style.animation = ""
         document.getElementById("current-dog-photo").style.height = "60%"
-        document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-3">Press the <img src="images/down-arrow.png" class="instruction-image"> button to go back to a dog's full photo. Try it now!</p>`
         if (!clickHereAlreadyShown){ 
-            document.getElementById("profile-footer").innerHTML += `<div id="click-here-speech-bubble-container"> <img id="click-here-speech-bubble" src="images/cartoon-bubble-left.png"> <div id="click-here-speech-bubble-message">Click here to share a direct link to a profile!</div></div>`
+            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-3">Scroll down and tap <span id="share-link-span">Share Yet Another Dog's Profile </span> to share the profile! Try it now!</p>`
+        } else {
+            document.getElementById("info-icon").style.opacity = "1"
+            document.getElementById("profile-card").innerHTML += `<p id="instruction" class="instruction-overlay-3">Press the <img src="images/down-arrow.png" class="instruction-image"> button to go back to a dog's full photo. Try it now!</p>`
+            document.getElementById("info-icon").addEventListener(typeOfInteraction, tutorialStepSeven, {passive: true} )
         }
-        clickHereAlreadyShown = true 
         document.getElementById("share-link").addEventListener(typeOfInteraction, function(){
             document.getElementById("instruction").remove()
+            clickHereAlreadyShown = true 
             share()
         }, {passive: true})
-        document.getElementById("info-icon").addEventListener(typeOfInteraction, tutorialStepSeven, {passive: true} )
             }, 1000);
 }
 
@@ -1498,7 +1500,7 @@ function searchForDog() {
 
 
 let images = ["images/Agata.jpeg", "images/Annie.jpeg", "images/Arco.jpeg", "images/Aslan.jpeg", "images/badge-like.png", "images/badge-nope.png", "images/Balloo.jpeg", "images/Barcelona.jpg", "images/Barcelona2.jpg", "images/Barcelona3.jpg", "images/Barcelona4.jpg", "images/Bella.jpeg", "images/Buddy.jpeg", "images/Canica-Ting-Ting.jpeg", "images/cartoon-bubble-left.png", "images/Chico-2.jpeg", "images/Chico.jpeg", "images/Chilli.jpeg", "images/copy-link-icon.png", "images/Dana.jpeg", "images/Darling.jpeg", "images/DonPerro.jpg", "images/Duna.jpeg", "images/Ekaitz.jpeg", "images/email-icon.png", "images/Enzo.jpeg", 
-                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Luna2.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.jpg"]
+                "images/facebook-icon.png", "images/FacebookDogsIcon.png", "images/Flecha.jpeg", "images/Frida.jpeg", "images/Gala.jpeg", "images/George.jpeg", "images/Gohan.jpeg", "images/Happy.jpeg", "images/HenryAndDobby.jpeg", "images/home-icon.png", "images/Horus.jpeg", "images/icon-chat.png", "images/icon-cross.png", "images/icon-heart.png", "images/icon-profile.png", "images/info-icon.png", "images/Izzy.jpeg", "images/Jordi.jpeg", "images/Kira.jpeg", "images/Kiwi.jpeg", "images/Kona.jpeg", "images/Lemmy.jpeg", "images/Lisa.jpeg", "images/location-icon-2.png", "images/location-icon.png", "images/logo.png", "images/Loky.jpeg", "images/Luna.jpeg", "images/Luna2.jpeg", "images/Miga.jpeg", "images/Miles.jpeg", "images/Milo.jpeg", "images/Milow.jpeg", "images/Mora.jpeg", "images/Nemo.jpeg", "images/Neo.jpeg", "images/Nerea.jpeg", "images/Nina.jpeg", "images/Nudo.jpeg", "images/open-link-icon.png", "images/Otis.jpeg", "images/paw-button.png", "images/paw-print.png", "images/Penny.jpeg", "images/Pip.jpeg", "images/rescue-dog-icon.png", "images/Rex.jpeg", "images/Rino.jpeg", "images/Rollo.jpeg", "images/Salsifi.jpeg", "images/Sandy.jpeg", "images/Sansa.jpeg", "images/Sassy.jpeg", "images/security-logo.png", "images/Slinky.jpeg", "images/Spooky.jpeg", "images/super-like-badge.png", "images/super-like-button.png", "images/Teddy.jpeg", "images/Tero.jpeg", "images/Thor.jpeg", "images/ti.jpg", "images/TinDogLogo2.png", "images/Tita.jpeg", "images/Tizon.jpeg", "images/Toby.jpeg", "images/Tro.jpeg", "images/TrufoAndRufa.jpeg", "images/twitter-icon.png", "images/Tyler.jpeg", "images/undo-arrow.png", "images/Vermú.jpeg", "images/whatsapp-icon.png", "images/Wolfie.jpeg", "images/Yara.jpeg", "images/Yohji.jpeg", "images/Gretel.jpeg", "images/Prada.jpeg", "images/down-arrow.png", "images/Barcelona1.jpg", "images/sampleDog1.jpg", "images/sampleDog2.jpg", "images/sampleDog3.jpg", "images/sadDog.jpg", "images/Dude.jpeg", "images/Rosie.jpeg"]
 
 
 let loadingDotsTimer = setInterval(loadingDots, 200)

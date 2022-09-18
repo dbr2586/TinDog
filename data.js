@@ -25,7 +25,7 @@ const sampleDogs = [
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 3,
-        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!",
+        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!<br><br>I love sniffing lamp posts, going on short walks, and eating food on the street. I hate skateboards.",
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
@@ -47,7 +47,7 @@ const sampleDogs = [
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 3,
-        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!",
+        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!<br><br>I love sniffing lamp posts, going on short walks, and eating food on the street. I hate skateboards.",
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
@@ -92,7 +92,7 @@ const sampleDogs2 = [
         initialObjectPosition: "center",
         secondaryObjectPosition: "center",
         age: 3,
-        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!",
+        bio: "I might be a little weird looking, but I have a gigantic collection of treats and toys!<br><br>I love sniffing lamp posts, going on short walks, and eating food on the street. I hate skateboards.",
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
@@ -257,6 +257,18 @@ const barcelonaFacebookDogs = [
                             <br>
                             <br>
                             Sign: unknown, but my mom thinks Leo or Sag`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },{
+        name: "The Dude",
+        avatar: "images/Dude.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "50% 30%",
+        age: "19 (months)",
+        bio: `Looking for a playmate, not a partner.
+            <br><br>Likes rolling in muddy water, playing chase, the occasional game of footy, and slapping Nazis with his mum. Also, the Dude abides.
+            <br><br> Dislikes: mean people, fruit & vegetables, and large rocks.`,
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
