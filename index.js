@@ -32,7 +32,7 @@ let lastDog
 let clone = []
 let discardPile = [] 
 let undoPile = []
-let superLikesLeft = 10
+let superLikesLeft = 20
 let touchstartX = 0
 let touchstartY = 0
 let touchendX = 0
@@ -741,7 +741,7 @@ function initialize(groupToUse){
         dogsToDisplay = createCloneOf(groupToUse)
         dogLoaded ? dogsToDisplay.splice(spliceNumber, 1) : ""
         currentDog = getNextDog()
-        groupBeingUsed === barcelonaRescueDogs ? superLikesLeft = barcelonaRescueDogs.length : superLikesLeft = 10
+        groupBeingUsed === barcelonaRescueDogs ? superLikesLeft = barcelonaRescueDogs.length : superLikesLeft = 20
         render()
     }
 }
@@ -876,7 +876,7 @@ function makeStuffLookInactive(){
 }
 
 function generateTutorial(){
-    superLikesLeft++
+    superLikesLeft = 1
     document.getElementById("profile-container").style.backgroundImage = "none"
     document.getElementById("profile-container").style.animation = ""
     document.getElementById("profile-container").classList.remove("welcome-screen")
@@ -984,6 +984,7 @@ function tutorialStepSix(){
             document.getElementById("instruction").remove()
             clickHereAlreadyShown = true 
             share()
+            document.getElementById("badge-container").style.zIndex = "-1"
         }, {passive: true})
             }, 1000);
 }
