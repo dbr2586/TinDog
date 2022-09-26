@@ -447,6 +447,17 @@ const barcelonaFacebookDogs = [
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
     },{
+        name: "Marjorie",
+        avatar: "images/Marjorie.jpeg",
+        initialObjectPosition: "50% 50%",
+        secondaryObjectPosition: "50% 50%",
+        age: 4,
+        bio: `Mariposa social (no). Connoisseur de pelotas. En mi tiempo libre me gusta dormir, pedir comida que no necesito y ser dramática.`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+    {
         name: "Miles",
         avatar: "images/Miles.jpeg",
         initialObjectPosition: "center",
@@ -469,6 +480,17 @@ const barcelonaFacebookDogs = [
         age: 2,
         bio: `Socialite. I am invited to neighbors terrace parties, even if my human isn't. Star of the 
                          local pipican. Sniff my ass, if you pass me.`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },
+    {
+        name: "Misha",
+        avatar: "images/Misha.jpg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "50% 80%",
+        age: 1,
+        bio: `Sevillian. Introverted but with a wild side. Gay. Libra. Into philosophical talks and cuddles. Enjoy running, eating grass and licking feet of strangers while they’re sunbathing at the beach.`,
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
@@ -521,6 +543,16 @@ const barcelonaFacebookDogs = [
         secondaryObjectPosition: "center",
         age: 2,
         bio: "6ft 2, sensitive, likes long walks on the beach.",
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },  {
+        name: "Phoebe",
+        avatar: "images/Phoebe.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "center",
+        age: 1.75,
+        bio: "Hola me llamo Phoebe y soy andaluza. Tengo un año y 9 meses ... Me encanta jugar, comer todo lo que encuentro y correr por la playa. Si quieres hacemos una carrera y si me ganas a lo mejor te concedo otra cita, pero lo dudo, por eso estoy soltera. Nadie puede ganar estas piernas!",
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
@@ -577,7 +609,30 @@ const barcelonaFacebookDogs = [
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
-    }, {
+    }, 
+    {
+        name: "Roscón",
+        avatar: "images/Roscón.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "50% 50%",
+        age: 1,
+        bio: `Soy mas grande que mi hermana Cleo.`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    },    {
+        name: "Cleo",
+        avatar: "images/Cleo.jpeg",
+        initialObjectPosition: "center",
+        secondaryObjectPosition: "50% 60%",
+        age: "11 meses",
+        bio: `Soy más simpático que mi hermano Roscón.`,
+        hasBeenSwiped: false,
+        hasBeenLiked: false, 
+        hasBeenSuperLiked: false
+    }, 
+    
+    {
         name: "Rosie",
         avatar: "images/Rosie.jpeg",
         initialObjectPosition: "center",
