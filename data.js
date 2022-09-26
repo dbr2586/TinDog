@@ -626,7 +626,7 @@ const barcelonaFacebookDogs = [
         initialObjectPosition: "center",
         secondaryObjectPosition: "50% 60%",
         age: "11 meses",
-        bio: `Soy más simpático que mi hermano Roscón.`,
+        bio: `Soy más linda que mi hermano Roscón.`,
         hasBeenSwiped: false,
         hasBeenLiked: false, 
         hasBeenSuperLiked: false
